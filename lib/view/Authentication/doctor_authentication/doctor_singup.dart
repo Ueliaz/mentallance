@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
@@ -62,19 +63,33 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
               height: 20,
             ),
             reusableButton(context, "Sign Up", colorCollection[1], () async {
-              try {
-                UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                email: _emailTextController.text,
-                password: _passwordTextController.text,
-              );
+  try {
+    String email = _emailTextController.text;
+    String password = _passwordTextController.text;
+
+    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
     // User creation successful, do something with the userCredential
-                User? user = userCredential.user;
-                print('Created user: ${user?.uid}');
-              } catch (e) {
+    User? user = userCredential.user;
+    print('Created user: ${user?.uid}');
+
+    // Create a document in the "Danisan" collection with user information
+    await FirebaseFirestore.instance.collection('Danisan').doc(user?.uid).set({
+      'DanisanIsim': _userNameTextController.text,
+      'DanisanEmail': email,
+      // Add more fields as needed
+    });
+
+    print('Document created in "Danisan" collection');
+  } catch (e) {
     // Handle authentication errors
-                print('Sign up failed: $e');
-              }
+    print('Sign up failed: $e');
+  }
 })
+
           ],
         ),
       )),
