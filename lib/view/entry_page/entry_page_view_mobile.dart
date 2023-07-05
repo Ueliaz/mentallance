@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mentallance/components/assets.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/theme/app_theme.dart';
-import 'package:mentallance/view/doctor_authentication/doctor_singin.dart';
+import 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
+import 'package:mentallance/view/Authentication/user_authentication/user_singin.dart';
 
 class EntryPageView extends StatelessWidget {
   const EntryPageView({super.key});
@@ -26,7 +27,7 @@ class EntryPageView extends StatelessWidget {
                 Image.asset(logo),
                 Padding(
                   padding: const EdgeInsets.only( left: 50.0,right:50.0, top: 20),
-                  child: reusableButton(context, 'Danisan Giris', colorCollection[1],(){}),
+                  child: reusableButton(context, 'Danisan Giris', colorCollection[1],(){Navigator.push(context, MaterialPageRoute(builder: (context) => User_singIn()));}),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(50.0),

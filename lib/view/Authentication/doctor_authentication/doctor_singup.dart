@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/theme/app_theme.dart';
 
-import '../../components/reusable_widgets/reusable_text_field.dart';
+import '../../../components/reusable_widgets/reusable_text_field.dart';
 
 
 /*
@@ -64,7 +64,7 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
               //TODO ; 
               //* hesap olusturma icin veri tabanina baglanacak
               //* hata kontrolu yapilacak
-
+              // !!!
 
 
             })

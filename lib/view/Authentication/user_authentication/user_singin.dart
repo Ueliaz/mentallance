@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/theme/app_theme.dart';
-import 'package:mentallance/view/doctor_authentication/doctor_singup.dart';
+import 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
 
 /*
 ! Bu dosyada Olanlar
@@ -19,20 +18,20 @@ import 'package:mentallance/view/doctor_authentication/doctor_singup.dart';
 
  */
 
-class Doctor_singIn extends StatefulWidget {
-  const Doctor_singIn({super.key});
+class User_singIn extends StatefulWidget {
+  const User_singIn({super.key});
 
   @override
-  State<Doctor_singIn> createState() => _Doctor_singInState();
+  State<User_singIn> createState() => _User_singInState();
 }
 
-class _Doctor_singInState extends State<Doctor_singIn> {
+class _User_singInState extends State<User_singIn> {
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarr(context, 'DOKTOR GIRIS'),
+      appBar: customAppBarr(context, 'DANISAN GIRIS'),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
@@ -56,17 +55,9 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               ),
               forgetPassword(context),
               reusableButton(context, "Sign In", colorCollection[1], () {
-                FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                      email: _emailTextController.text,
-                      password: _passwordTextController.text,
-                    )
-                    .then((value) {})
-                    .onError((error, stackTrace) {
-                  print("Error ${error.toString()}");
-                });
+                // ! firebase Auth
               }),
-              signUpOption()
+              //signUpOption()
             ],
           ),
         ),
