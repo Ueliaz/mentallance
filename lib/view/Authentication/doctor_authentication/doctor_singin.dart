@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
@@ -55,6 +56,15 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               ),
               forgetPassword(context),
               reusableButton(context, "Sign In", colorCollection[1], () {
+                FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text,
+                    )
+                    .then((value) {})
+                    .onError((error, stackTrace) {
+                  print("Error ${error.toString()}");
+                });
                 // ! firebase Auth
               }),
               signUpOption()
