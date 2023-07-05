@@ -99,7 +99,9 @@ class _User_singInState extends State<User_singIn> {
             style: TextStyle(color: Colors.black),
             textAlign: TextAlign.right,
           ),
-          onPressed: () {}),
+          onPressed: () {
+            // ! firebase Auth
+          }),
     );
   }
 }
