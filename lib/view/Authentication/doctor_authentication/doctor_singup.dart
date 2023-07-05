@@ -92,15 +92,45 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
                   ),
                 );
             } catch (e) {
-                print('Sign up failed: $e');
-                 // Show an error message
+                String errorMessage = 'Kayıt işlemi gerçekleştirilemedi.Tekrar deneyiniz.';
+                String errorMessage1 = '';
+
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Kayıt işlemi gerçekleştirilemedi.Tekrar deneyiniz.'),
+                  SnackBar(
+                    content: Text(errorMessage),
                     backgroundColor: Colors.red,
-                    ),
-                  );
+                ),
+              );
+
+                if (e is FirebaseAuthException) {
+                  if (e.code == 'weak-password') {
+                    errorMessage1 = 'Şifreniz 6 haneden az olamaz.';
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(errorMessage1),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }else if (e.code == 'email-already-in-use') {
+                      errorMessage1 = 'Bu mail adresi zaten kayıtlı.Farklı bir adres deneyiniz.';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorMessage1),
+                          backgroundColor: Colors.red,
+                        ),
+                    );
+                  }else if(e.code == 'invalid-email'){
+                      errorMessage1 = 'Lütfen geçerli bir mail adresi giriniz.';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorMessage1),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                  }
                 }
+                print('Sign up failed: $e');
+            }
             })
           ],
         ),
