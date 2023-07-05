@@ -27,11 +27,11 @@ class EntryPageView extends StatelessWidget {
                 Image.asset(logo),
                 Padding(
                   padding: const EdgeInsets.only( left: 50.0,right:50.0, top: 20),
-                  child: reusableButton(context, 'Danisan Giris', colorCollection[1],(){Navigator.push(context, MaterialPageRoute(builder: (context) => User_singIn()));}),
+                  child: reusableButton(context, 'Danisan Giris', colorCollection[1],(){Navigator.push(context, MaterialPageRoute(builder: (context) => const User_singIn()));}),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(50.0),
-                  child: reusableButton(context, 'Doktor Giris', colorCollection[1],(){Navigator.push(context, MaterialPageRoute(builder: (context) => Doctor_singIn()));}),
+                  child: reusableButton(context, 'Doktor Giris', colorCollection[1],(){Navigator.push(context, MaterialPageRoute(builder: (context) => const Doctor_singIn()));}),
                 ),
               ],
             ),

@@ -27,8 +27,8 @@ class Doctor_singIn extends StatefulWidget {
 }
 
 class _Doctor_singInState extends State<Doctor_singIn> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +86,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Doctor_singUp(),
+                  builder: (context) => const Doctor_singUp(),
                 ));
           },
           child: const Text(

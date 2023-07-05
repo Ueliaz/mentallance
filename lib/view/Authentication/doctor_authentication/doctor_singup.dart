@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/theme/app_theme.dart';
-
 import '../../../components/reusable_widgets/reusable_text_field.dart';
-
 
 /*
 ! Bu dosyada Olanlar
@@ -63,33 +61,47 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
               height: 20,
             ),
             reusableButton(context, "Sign Up", colorCollection[1], () async {
-  try {
-    String email = _emailTextController.text;
-    String password = _passwordTextController.text;
+              try {
+                String email = _emailTextController.text;
+                String password = _passwordTextController.text;
 
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+                UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                email: email,
+                password: password,
+              );
 
-    // User creation successful, do something with the userCredential
-    User? user = userCredential.user;
-    print('Created user: ${user?.uid}');
+                // Danisan olusturuluyor
+                User? user = userCredential.user;
+                print('Danisan Kaydi Gerceklesitirildi: ${user?.uid}');
 
-    // Create a document in the "Danisan" collection with user information
-    await FirebaseFirestore.instance.collection('Danisan').doc(user?.uid).set({
-      'DanisanIsim': _userNameTextController.text,
-      'DanisanEmail': email,
-      // Add more fields as needed
-    });
+                // DanisanKayit koleksiyonunda doküman olusturuluyor.
+                await FirebaseFirestore.instance.collection('DanisanKayit').doc(user?.uid).set({
+                  'DanisanIsim': _userNameTextController.text,
+                  'DanisanEmail': email,
+                  'DanisanSoyisim': "",
+                  'DanisanYas': "",
+                  'DanisanCinsiyet': "",
+              });
 
-    print('Document created in "Danisan" collection');
-  } catch (e) {
-    // Handle authentication errors
-    print('Sign up failed: $e');
-  }
-})
+                print('"DanisanKayit" koleksiyonunda dokuman olusturuldu.');
 
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Danışan başarılı bir şekilde kaydedildi!'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+            } catch (e) {
+                print('Sign up failed: $e');
+                 // Show an error message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Kayıt işlemi gerçekleştirilemedi.Tekrar deneyiniz.'),
+                    backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+            })
           ],
         ),
       )),
