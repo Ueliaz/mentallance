@@ -5,6 +5,21 @@ import 'package:mentallance/theme/app_theme.dart';
 
 import '../../components/reusable_widgets/reusable_text_field.dart';
 
+
+/*
+! Bu dosyada Olanlar
+
+* kayit ekrani 
+* firebase altyapili Sing Up 
+
+! yapilmasi gerekenler
+
+? password kontrolu
+? mail kontrolu
+? Firabaseden gelen hatalarin kontrolu
+
+ */
+
 class Doctor_singUp extends StatefulWidget {
   const Doctor_singUp({Key? key}) : super(key: key);
 

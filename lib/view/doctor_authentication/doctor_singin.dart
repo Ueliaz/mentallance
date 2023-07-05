@@ -5,6 +5,20 @@ import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart
 import 'package:mentallance/theme/app_theme.dart';
 import 'package:mentallance/view/doctor_authentication/doctor_singup.dart';
 
+/*
+! Bu dosyada Olanlar
+
+* girs ekrani 
+* firebase altyapili Sing in 
+
+! yapilmasi gerekenler
+
+? password kontrolu
+? mail kontrolu
+? Firabaseden gelen hatalarin kontrolu
+
+ */
+
 class Doctor_singIn extends StatefulWidget {
   const Doctor_singIn({super.key});
 
@@ -30,8 +44,8 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               const SizedBox(
                 height: 30,
               ),
-              reusableTextField("Kullanıcı Adınızı giriniz", Icons.person_outline, false,
-                  _emailTextController),
+              reusableTextField("Kullanıcı Adınızı giriniz",
+                  Icons.person_outline, false, _emailTextController),
               const SizedBox(
                 height: 20,
               ),
@@ -41,15 +55,14 @@ class _Doctor_singInState extends State<Doctor_singIn> {
                 height: 5,
               ),
               forgetPassword(context),
-              reusableButton(context, "Sign In", colorCollection[1] ,() {
+              reusableButton(context, "Sign In", colorCollection[1], () {
                 FirebaseAuth.instance
                     .signInWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text,
-                        )
-                    .then((value) {
-                  
-                }).onError((error, stackTrace) {
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text,
+                    )
+                    .then((value) {})
+                    .onError((error, stackTrace) {
                   print("Error ${error.toString()}");
                 });
               }),
@@ -69,7 +82,11 @@ class _Doctor_singInState extends State<Doctor_singIn> {
             style: TextStyle(color: Colors.black)),
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Doctor_singUp(),));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Doctor_singUp(),
+                ));
           },
           child: const Text(
             " Hesap oluşur",
@@ -86,20 +103,17 @@ class _Doctor_singInState extends State<Doctor_singIn> {
       height: 35,
       alignment: Alignment.bottomRight,
       child: TextButton(
-        child: const Text(
-          "Şifremi unuttum?",
-          style: TextStyle(color: Colors.black),
-          textAlign: TextAlign.right,
-        ),
-        onPressed: () {}
-      ),
+          child: const Text(
+            "Şifremi unuttum?",
+            style: TextStyle(color: Colors.black),
+            textAlign: TextAlign.right,
+          ),
+          onPressed: () {}),
     );
   }
 }
 
 @override
 AppBar customAppBarr(BuildContext context, String title) {
-  return AppBar(
-    title: Text(title)
-  );
+  return AppBar(title: Text(title));
 }
