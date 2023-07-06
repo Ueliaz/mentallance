@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/theme/app_theme.dart';
-import 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
+// import '../../../services/auth_service.dart';
 
 /*
 ! Bu dosyada Olanlar
@@ -65,28 +65,28 @@ class _User_singInState extends State<User_singIn> {
     );
   }
 
-  Row signUpOption() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Henüz bir hesaba sahip değil misiniz?",
-            style: TextStyle(color: Colors.black)),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Doctor_singUp(),
-                ));
-          },
-          child: const Text(
-            " Hesap oluşur",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        )
-      ],
-    );
-  }
+  // Row signUpOption() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       const Text("Henüz bir hesaba sahip değil misiniz?",
+  //           style: TextStyle(color: Colors.black)),
+  //       GestureDetector(
+  //         onTap: () {
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) => Doctor_singUp(),
+  //               ));
+  //         },
+  //         child: const Text(
+  //           " Hesap oluşur",
+  //           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   Widget forgetPassword(BuildContext context) {
     return Container(

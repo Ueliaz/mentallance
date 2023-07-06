@@ -1,9 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
-import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
-import 'package:mentallance/theme/app_theme.dart';
-import 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
+part of authentication;
+
+
 
 /*
 ! Bu dosyada Olanlar
@@ -27,8 +24,9 @@ class Doctor_singIn extends StatefulWidget {
 }
 
 class _Doctor_singInState extends State<Doctor_singIn> {
-  TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
+  final log = logger(Doctor_singIn);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,17 +53,10 @@ class _Doctor_singInState extends State<Doctor_singIn> {
                 height: 5,
               ),
               forgetPassword(context),
-              reusableButton(context, "Sign In", colorCollection[1], () {
-                FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                      email: _emailTextController.text,
-                      password: _passwordTextController.text,
-                    )
-                    .then((value) {})
-                    .onError((error, stackTrace) {
-                  print("Error ${error.toString()}");
-                });
-                // ! firebase Auth
+              // docSingIn(context, _emailTextController, _passwordTextController),
+              // ! firebase Auth
+              reusableButton(context, "Sign Up", colorCollection[1], (){
+                docSingin(_emailTextController, _passwordTextController);
               }),
               signUpOption()
             ],
@@ -118,3 +109,19 @@ class _Doctor_singInState extends State<Doctor_singIn> {
 AppBar customAppBarr(BuildContext context, String title) {
   return AppBar(title: Text(title));
 }
+
+// @override
+// Widget docSingIn(BuildContext context, econtroller, pcontroller) {
+//   return reusableButton(context, "Sign In", colorCollection[1], () {
+//     FirebaseAuth.instance
+//         .signInWithEmailAndPassword(
+//           email: econtroller.text,
+//           password: pcontroller.text,
+//         )
+//         .then((value) {})
+//         .onError((error, stackTrace) {
+//       print("Error ${error.toString()}");
+//     });
+//     // ! firebase Auth
+//   });
+// }

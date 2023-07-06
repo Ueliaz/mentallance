@@ -15,7 +15,7 @@ class FrostedGlassBox extends StatelessWidget {
       required this.theChild});
   final double theWidth;
   final double theHeight;
-  final theChild;
+  final Widget theChild;
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
-import 'package:mentallance/theme/app_theme.dart';
-
-import '../../../components/reusable_widgets/reusable_text_field.dart';
+part of authentication;
 
 /*
 ! Bu dosyada Olanlar
@@ -59,20 +54,8 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
             const SizedBox(
               height: 20,
             ),
-            reusableButton(context, "Sign Up", colorCollection[1], () async {
-              try {
-                UserCredential userCredential =
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: _emailTextController.text,
-                  password: _passwordTextController.text,
-                );
-                // User creation successful, do something with the userCredential
-                User? user = userCredential.user;
-                print('Created user: ${user?.uid}');
-              } catch (e) {
-                // Handle authentication errors
-                print('Sign up failed: $e');
-              }
+            reusableButton(context, "Sign Up", colorCollection[1], (){
+              docSingUn(_emailTextController, _passwordTextController,);
 
               //TODO ;
               //* hesap olusturma icin veri tabanina baglanacak
@@ -86,7 +69,3 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
   }
 }
 
-@override
-AppBar customAppBarr(BuildContext context, String title) {
-  return AppBar(title: Text(title));
-}
