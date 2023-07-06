@@ -55,7 +55,7 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
               height: 20,
             ),
             reusableButton(context, "Sign Up", colorCollection[1], (){
-              docSingUn(_emailTextController, _passwordTextController,);
+              docSingUn(context,_emailTextController, _passwordTextController,_userNameTextController);
 
               //TODO ;
               //* hesap olusturma icin veri tabanina baglanacak
