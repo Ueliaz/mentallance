@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mentallance/components/assets.dart';
-
-
-
+part of authentication;
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -14,9 +10,23 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Column(children: [
-      Image.asset(forgotimg)
-
-    ]),);
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.asset(forgotimg),
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: reusableButton(
+                    context, 'Şifremi unuttum', colorCollection[1], () {
+                  
+                }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -9,10 +9,12 @@ import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/theme/app_theme.dart';
 
-import '../view/Authentication/forgot_password.dart';
+import '../components/assets.dart';
+
 
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
+part 'package:mentallance/view/Authentication/forgot_password.dart';
 
 
 
