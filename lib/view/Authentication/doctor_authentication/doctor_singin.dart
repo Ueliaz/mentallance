@@ -56,7 +56,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               // docSingIn(context, _emailTextController, _passwordTextController),
               // ! firebase Auth
               reusableButton(context, "Sign Up", colorCollection[1], (){
-                docSingin(_emailTextController, _passwordTextController);
+                docSingin(context,_emailTextController, _passwordTextController);
               }),
               signUpOption()
             ],
