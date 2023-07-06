@@ -11,7 +11,7 @@ import 'package:mentallance/theme/app_theme.dart';
 
 import '../components/assets.dart';
 
-
+part 'package:mentallance/services/forgot_password_service.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
 part 'package:mentallance/view/Authentication/forgot_password.dart';
@@ -177,7 +177,3 @@ void docSingUn(
 }
 
 
-void resetPassword(BuildContext buildContext, econtroller){
-  
-
-}
