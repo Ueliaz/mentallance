@@ -8,6 +8,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,12 +17,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: Column(
             children: [
               Image.asset(forgotimg),
+              reusableTextField("Kullanıcı Adınızı giriniz",
+                  Icons.person_outline, false, _emailTextController),
               Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
-                    context, 'Şifremi unuttum', colorCollection[1], () {
-                  
-                }),
+                    context, 'Şifremi Unuttum', colorCollection[1], () {
+                      resetPassword(context,_emailTextController);
+
+                     }),
               ),
             ],
           ),
