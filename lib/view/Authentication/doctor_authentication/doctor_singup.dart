@@ -70,27 +70,34 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
                 password: password,
               );
 
-                // Danisan olusturuluyor
+                // Doktor olusturuluyor
                 User? user = userCredential.user;
-                print('Danisan Kaydi Gerceklesitirildi: ${user?.uid}');
+                print('Doktor Kaydi Gerceklesitirildi: ${user?.uid}');
 
-                // DanisanKayit koleksiyonunda doküman olusturuluyor.
-                await FirebaseFirestore.instance.collection('DanisanKayit').doc(user?.uid).set({
-                  'DanisanIsim': _userNameTextController.text,
-                  'DanisanEmail': email,
-                  'DanisanSoyisim': "",
-                  'DanisanYas': "",
-                  'DanisanCinsiyet': "",
+                // KayitOlanDoktor koleksiyonunda doküman olusturuluyor.
+                await FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(user?.uid).set({
+                  'DoktorIsim': _userNameTextController.text,
+                  'DoktorSoyisim': " ",
+                  'DoktorEmail': email,
               });
 
-                print('"DanisanKayit" koleksiyonunda dokuman olusturuldu.');
+                print('"KayitOlanDoktor" koleksiyonunda dokuman olusturuldu.');
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Danışan başarılı bir şekilde kaydedildi!'),
+                    content: Text('Doktor başarılı bir şekilde kaydedildi!'),
                     backgroundColor: Colors.green,
                   ),
                 );
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Bilgilerinizle giriş yapabilirsiniz.'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+
+
             } catch (e) {
                 String errorMessage = 'Kayıt işlemi gerçekleştirilemedi.Tekrar deneyiniz.';
                 String errorMessage1 = '';
