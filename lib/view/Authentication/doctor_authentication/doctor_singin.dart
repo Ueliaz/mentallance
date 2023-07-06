@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
@@ -55,17 +56,63 @@ class _Doctor_singInState extends State<Doctor_singIn> {
                 height: 5,
               ),
               forgetPassword(context),
-              reusableButton(context, "Sign In", colorCollection[1], () {
-                FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                      email: _emailTextController.text,
-                      password: _passwordTextController.text,
-                    )
-                    .then((value) {})
-                    .onError((error, stackTrace) {
-                  print("Error ${error.toString()}");
+              reusableButton(context, "Sign In", colorCollection[1], () async {
+                try {
+                  UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text,
+                  );
+                  User? user = userCredential.user;
+                  print('Giris yapan doktor: ${user?.uid}');
+
+    // FireStore'da koleksiyona doküman oluşturuluyor.
+                  FirebaseFirestore.instance.collection('GirisYapanDoktor').add({
+                  'DoktorId': user?.uid,
+                  'DoktorEmail': user?.email,
+                  'GirisZamani': DateTime.now(),
+                  'DoktorIsim':"",
+                  'DoktorSoyIsim':"",
                 });
-                // ! firebase Auth
+
+                print('"GirisYapanDoktor" koleksiyonunda dokuman olusturuldu.');
+
+                String welcomeMessage = 'Hoşgeldin, ${user?.email}';
+                ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(welcomeMessage),
+                  backgroundColor: Colors.green,
+                ),
+              );
+
+              }catch (e) {
+                if (e is FirebaseAuthException) {
+                  String errorMessage = '';
+
+                  switch (e.code) {
+                    case 'user-not-found':
+                      errorMessage = 'Kullanıcı bulunamadı. Lütfen geçerli bir e-posta adresi girin.';
+                      break;
+                    case 'wrong-password':
+                      errorMessage = 'Hatalı şifre. Lütfen doğru şifreyi girin.';
+                      break;
+                    case 'invalid-email':
+                      errorMessage = 'Geçersiz e-posta adresi. Lütfen geçerli bir e-posta adresi girin.';
+                      break;
+                    default:
+                      errorMessage = 'Giriş başarısız oldu. Hata: ${e.code}';
+                      break;
+              }
+              
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(errorMessage),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                } else {
+                  print('Sign in failed: $e');
+                }
+              }
               }),
               signUpOption()
             ],
