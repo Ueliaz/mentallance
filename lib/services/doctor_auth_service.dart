@@ -175,3 +175,9 @@ void docSingUn(
     print('Sign up failed: $e');
   }
 }
+
+
+void resetPassword(BuildContext buildContext, econtroller){
+  
+
+}
