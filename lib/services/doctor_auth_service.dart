@@ -16,21 +16,65 @@ part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singu
 
 
 
-void docSingin(econtroller,pcontroller){
+Future<void> docSingin(BuildContext context,econtroller,pcontroller) async {
    final logg = logger(Doctor_singUp);
-    FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-          email: econtroller.text,
-          password: pcontroller.text,
-        )
-        .then((value) {})
-        .onError((error, stackTrace) {
-      logg.e("Error ${error.toString()}");
+    try{
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: econtroller.text,
+      password: pcontroller.text,
+    );
+
+    User? user = userCredential.user;
+    print('Giris yapan doktor: ${user?.uid}');
+
+    FirebaseFirestore.instance.collection('GirisYapanDoktor').add({
+    'DoktorId': user?.uid,
+    'DoktorEmail': user?.email,
+    'GirisZamani': DateTime.now(),
+    'DoktorIsim':"",
+    'DoktorSoyIsim':"",
     });
-  }
 
+    print('"GirisYapanDoktor" koleksiyonunda dokuman olusturuldu.');
 
+    String welcomeMessage = 'Hoşgeldin, ${user?.email}';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(welcomeMessage),
+        backgroundColor: Colors.green,
+      ),
+    );
 
+    }catch (e) {
+                if (e is FirebaseAuthException) {
+                  String errorMessage = '';
+
+                  switch (e.code) {
+                    case 'user-not-found':
+                      errorMessage = 'Kullanıcı bulunamadı. Lütfen geçerli bir e-posta adresi girin.';
+                      break;
+                    case 'wrong-password':
+                      errorMessage = 'Hatalı şifre. Lütfen doğru şifreyi girin.';
+                      break;
+                    case 'invalid-email':
+                      errorMessage = 'Geçersiz e-posta adresi. Lütfen geçerli bir e-posta adresi girin.';
+                      break;
+                    default:
+                      errorMessage = 'Giriş başarısız oldu. Hata: ${e.code}';
+                      break;
+              }
+              
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(errorMessage),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                } else {
+                  print('Sign in failed: $e');
+                }
+              }
+              }
 
   
 void docSingUn(BuildContext context,econtroller,pcontroller,unamecontroller)async{
