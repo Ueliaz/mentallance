@@ -55,7 +55,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               forgetPassword(context),
               // docSingIn(context, _emailTextController, _passwordTextController),
               // ! firebase Auth
-              reusableButton(context, "Sign Up", colorCollection[1], (){
+              reusableButton(context, "Sign İn", colorCollection[1], (){
                 docSingin(_emailTextController, _passwordTextController);
               }),
               signUpOption()
@@ -100,7 +100,9 @@ class _Doctor_singInState extends State<Doctor_singIn> {
             style: TextStyle(color: Colors.black),
             textAlign: TextAlign.right,
           ),
-          onPressed: () {}),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+          }),
     );
   }
 }
