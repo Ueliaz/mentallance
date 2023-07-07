@@ -57,6 +57,8 @@ class _Doctor_singInState extends State<Doctor_singIn> {
          
               reusableButton(context, "Sign In", colorCollection[1], (){
                 docSingin(context,_emailTextController, _passwordTextController);
+                //FNavigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) => CilendList(),), (route) => false);
+
               }),
               signUpOption()
             ],
@@ -77,7 +79,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Doctor_singUp(),
+                  builder: (context) => UserSingUp(),
                 ));
           },
           child: const Text(
@@ -112,18 +114,4 @@ AppBar customAppBarr(BuildContext context, String title) {
   return AppBar(title: Text(title));
 }
 
-// @override
-// Widget docSingIn(BuildContext context, econtroller, pcontroller) {
-//   return reusableButton(context, "Sign In", colorCollection[1], () {
-//     FirebaseAuth.instance
-//         .signInWithEmailAndPassword(
-//           email: econtroller.text,
-//           password: pcontroller.text,
-//         )
-//         .then((value) {})
-//         .onError((error, stackTrace) {
-//       print("Error ${error.toString()}");
-//     });
-//     // ! firebase Auth
-//   });
-// }
+

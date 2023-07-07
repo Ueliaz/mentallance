@@ -65,28 +65,7 @@ class _UserSingInState extends State<UserSingIn> {
     );
   }
 
-  // Row signUpOption() {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       const Text("Henüz bir hesaba sahip değil misiniz?",
-  //           style: TextStyle(color: Colors.black)),
-  //       GestureDetector(
-  //         onTap: () {
-  //           Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => Doctor_singUp(),
-  //               ));
-  //         },
-  //         child: const Text(
-  //           " Hesap oluşur",
-  //           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
+  
 
   Widget forgetPassword(BuildContext context) {
     return Container(

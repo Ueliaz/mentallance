@@ -10,6 +10,7 @@ import 'package:mentallance/logger.dart';
 import 'package:mentallance/theme/app_theme.dart';
 
 import '../components/assets.dart';
+import '../view/Doctor_interface/client_list_page/customer_list.dart';
 
 part 'package:mentallance/services/forgot_password_service.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
@@ -23,7 +24,9 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    );
+    ).then((value) { Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList(),));
+      return value;
+     });
 
     User? user = userCredential.user;
     logg.v('Giris yapan doktor: ${user?.uid}');
@@ -44,7 +47,6 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         content: Text(welcomeMessage),
         backgroundColor: Colors.green,
       ),
-      
     );
   } catch (e) {
     if (e is FirebaseAuthException) {
@@ -54,20 +56,20 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         case 'user-not-found':
           errorMessage =
               'Kullanıcı bulunamadı. Lütfen geçerli bir e-posta adresi girin.';
-          logg.i(errorMessage);
+          logg.e(errorMessage);
           break;
         case 'wrong-password':
           errorMessage = 'Hatalı şifre. Lütfen doğru şifreyi girin.';
-          logg.i(errorMessage);
+          logg.e(errorMessage);
           break;
         case 'invalid-email':
           errorMessage =
               'Geçersiz e-posta adresi. Lütfen geçerli bir e-posta adresi girin.';
-          logg.i(errorMessage);
+          logg.e(errorMessage);
           break;
         default:
           errorMessage = 'Giriş başarısız oldu. Hata: ${e.code}';
-          logg.i(errorMessage);
+          logg.e(errorMessage);
           break;
       }
 
