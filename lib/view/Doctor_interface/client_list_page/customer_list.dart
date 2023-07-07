@@ -1,3 +1,4 @@
+library customer;
 import 'package:flutter/material.dart';
 
 import '../../../components/assets.dart';
@@ -5,16 +6,18 @@ import '../../../components/reusable_widgets/reusable_button.dart';
 import '../../../components/reusable_widgets/reusable_text_field.dart';
 import '../../../services/doctor_auth_service.dart';
 import '../../../theme/app_theme.dart';
-import 'add_client.dart';
+import 'add_customer.dart';
+part 'package:mentallance/services/add_customer_service.dart';
 
-class CilendList extends StatefulWidget {
-  const CilendList({super.key});
+
+class CustomerList extends StatefulWidget {
+  const CustomerList({super.key});
 
   @override
-  State<CilendList> createState() => _CilendListState();
+  State<CustomerList> createState() => _CustomerListState();
 }
 
-class _CilendListState extends State<CilendList> {
+class _CustomerListState extends State<CustomerList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

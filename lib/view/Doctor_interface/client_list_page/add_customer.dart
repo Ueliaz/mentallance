@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentallance/services/add_client_service.dart';
+import 'package:mentallance/services/add_Client_service.dart';
 
 import '../../../components/assets.dart';
 import '../../../components/reusable_widgets/reusable_button.dart';
@@ -30,7 +30,7 @@ class _AddClientState extends State<AddClient> {
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
                     context, 'YENİ DANISAN KAYIT', colorCollection[1], () {
-                  addClient();
+                  
                 }),
               ),
             ],
