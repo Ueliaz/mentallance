@@ -18,14 +18,14 @@ import 'package:mentallance/theme/app_theme.dart';
 
  */
 
-class User_singIn extends StatefulWidget {
-  const User_singIn({super.key});
+class UserSingIn extends StatefulWidget {
+  const UserSingIn({super.key});
 
   @override
-  State<User_singIn> createState() => _User_singInState();
+  State<UserSingIn> createState() => _UserSingInState();
 }
 
-class _User_singInState extends State<User_singIn> {
+class _UserSingInState extends State<UserSingIn> {
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
   @override

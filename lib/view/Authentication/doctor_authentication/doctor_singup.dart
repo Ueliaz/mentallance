@@ -14,14 +14,14 @@ part of authentication;
 
  */
 
-class Doctor_singUp extends StatefulWidget {
-  const Doctor_singUp({Key? key}) : super(key: key);
+class UserSingUp extends StatefulWidget {
+  const UserSingUp({Key? key}) : super(key: key);
 
   @override
-  _Doctor_singUpState createState() => _Doctor_singUpState();
+  _UserSingUpState createState() => _UserSingUpState();
 }
 
-class _Doctor_singUpState extends State<Doctor_singUp> {
+class _UserSingUpState extends State<UserSingUp> {
   TextEditingController _userNameTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
@@ -55,7 +55,7 @@ class _Doctor_singUpState extends State<Doctor_singUp> {
               height: 20,
             ),
             reusableButton(context, "Sign Up", colorCollection[1], (){
-              docSingUn(context,_emailTextController, _passwordTextController,_userNameTextController);
+              docSingUp(context,_emailTextController, _passwordTextController,_userNameTextController);
 
               //TODO ;
               //* hesap olusturma icin veri tabanina baglanacak

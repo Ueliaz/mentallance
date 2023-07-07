@@ -17,7 +17,7 @@ part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singu
 part 'package:mentallance/view/Authentication/forgot_password.dart';
 
 Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
-  final logg = logger(Doctor_singUp);
+  final logg = logger(UserSingUp);
   try {
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -26,7 +26,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
     );
 
     User? user = userCredential.user;
-    print('Giris yapan doktor: ${user?.uid}');
+    logg.v('Giris yapan doktor: ${user?.uid}');
 
     FirebaseFirestore.instance.collection('GirisYapanDoktor').add({
       'DoktorId': user?.uid,
@@ -36,7 +36,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
       'DoktorSoyIsim': "",
     });
 
-    print('"GirisYapanDoktor" koleksiyonunda dokuman olusturuldu.');
+    logg.v('"GirisYapanDoktor" koleksiyonunda dokuman olusturuldu.');
 
     String welcomeMessage = 'Hoşgeldin, ${user?.email}';
     ScaffoldMessenger.of(context).showSnackBar(
@@ -44,6 +44,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         content: Text(welcomeMessage),
         backgroundColor: Colors.green,
       ),
+      
     );
   } catch (e) {
     if (e is FirebaseAuthException) {
@@ -53,16 +54,20 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         case 'user-not-found':
           errorMessage =
               'Kullanıcı bulunamadı. Lütfen geçerli bir e-posta adresi girin.';
+          logg.i(errorMessage);
           break;
         case 'wrong-password':
           errorMessage = 'Hatalı şifre. Lütfen doğru şifreyi girin.';
+          logg.i(errorMessage);
           break;
         case 'invalid-email':
           errorMessage =
               'Geçersiz e-posta adresi. Lütfen geçerli bir e-posta adresi girin.';
+          logg.i(errorMessage);
           break;
         default:
           errorMessage = 'Giriş başarısız oldu. Hata: ${e.code}';
+          logg.i(errorMessage);
           break;
       }
 
@@ -73,12 +78,12 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         ),
       );
     } else {
-      print('Sign in failed: $e');
+      logg.e('Sign in failed: $e');
     }
   }
 }
 
-void docSingUn(
+void docSingUp(
     BuildContext context, econtroller, pcontroller, unamecontroller) async {
   final logg = logger(Doctor_singIn);
   try {
@@ -93,7 +98,7 @@ void docSingUn(
 
     // Doktor olusturuluyor
     User? user = userCredential.user;
-    print('Doktor Kaydi Gerceklesitirildi: ${user?.uid}');
+    logg.i('Doktor Kaydi Gerceklesitirildi: ${user?.uid}');
 
     // KayitOlanDoktor koleksiyonunda doküman olusturuluyor.
     await FirebaseFirestore.instance
@@ -105,7 +110,7 @@ void docSingUn(
       'DoktorEmail': email,
     });
 
-    print('"KayitOlanDoktor" koleksiyonunda dokuman olusturuldu.');
+    logg.i('"KayitOlanDoktor" koleksiyonunda dokuman olusturuldu.');
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -123,19 +128,19 @@ void docSingUn(
           backgroundColor: Colors.blue,
         ),
       );
-    }else{
-        ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Bilgilerinizle giriş yapabilirsiniz.'),
-        backgroundColor: Colors.green,
-      ),
-    );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bilgilerinizle giriş yapabilirsiniz.'),
+          backgroundColor: Colors.green,
+        ),
+      );
     }
     await user.sendEmailVerification();
-
   } catch (e) {
     String errorMessage = 'Kayıt işlemi gerçekleştirilemedi.Tekrar deneyiniz.';
     String errorMessage1 = '';
+    logg.e(errorMessage);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -172,8 +177,6 @@ void docSingUn(
         );
       }
     }
-    print('Sign up failed: $e');
+    logg.e('Sign up failed: $e');
   }
 }
-
-

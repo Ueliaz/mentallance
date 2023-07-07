@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: SplashScreen(),
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -18,9 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
   int _currentPageIndex = 0;
 
   final List<Widget> _pages = [
-    PageOne(),
-    PageTwo(),
-    PageThree(),
+    const PageOne(),
+    const PageTwo(),
+    const PageThree(),
   ];
 
   void _nextPage() {
@@ -63,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
           _pages[_currentPageIndex],
           Center(
             child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -71,17 +75,17 @@ class _SplashScreenState extends State<SplashScreen> {
                     ElevatedButton(
                       onPressed: _nextPage,
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       ),
-                      child: Text('Next'),
+                      child: const Text('Next'),
                     ),
                   if (_currentPageIndex == _pages.length - 1)
                     ElevatedButton(
                       onPressed: _finish,
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       ),
-                      child: Text('Finish'),
+                      child: const Text('Finish'),
                     ),
                 ],
               ),
@@ -94,9 +98,11 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 class PageOne extends StatelessWidget {
+  const PageOne({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -108,9 +114,11 @@ class PageOne extends StatelessWidget {
 }
 
 class PageTwo extends StatelessWidget {
+  const PageTwo({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -122,9 +130,11 @@ class PageTwo extends StatelessWidget {
 }
 
 class PageThree extends StatelessWidget {
+  const PageThree({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
