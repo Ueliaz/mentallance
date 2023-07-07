@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mentallance/view/Doctor_interface/client_list_page/customer_list.dart';
 import '../../../components/assets.dart';
 import '../../../components/reusable_widgets/reusable_button.dart';
 import '../../../components/reusable_widgets/reusable_text_field.dart';
-import '../../../services/doctor_auth_service.dart';
+import '../../../services/add_customer_service.dart';
 import '../../../theme/app_theme.dart';
+// Import the CustomerService class
 
 class AddClient extends StatefulWidget {
   const AddClient({super.key});
@@ -14,7 +14,17 @@ class AddClient extends StatefulWidget {
 }
 
 class _AddClientState extends State<AddClient> {
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final CustomerService _customerService = CustomerService(); // Create an instance of CustomerService
+
+  void addCustomerService() {
+    String email = _emailTextController.text.trim();
+
+    _customerService.addCustomerService(email); // Call the addCustomerService method
+
+    // Additional operations or UI updates can be performed here
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +33,20 @@ class _AddClientState extends State<AddClient> {
           child: Column(
             children: [
               Image.asset(forgotimg),
-              reusableTextField("Kullanıcı Adınızı giriniz",
-                  Icons.person_outline, false, _emailTextController),
+              reusableTextField(
+                "Kullanıcı Adınızı giriniz",
+                Icons.person_outline,
+                false,
+                _emailTextController,
+              ),
               Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
-                    context, 'YENİ DANISAN KAYIT', colorCollection[1], () {
-                  addCustomerService();
-                }),
+                  context,
+                  'YENİ DANISAN KAYIT',
+                  colorCollection[1],
+                  addCustomerService, // Call the addCustomerService method when the button is pressed
+                ),
               ),
             ],
           ),

@@ -26,8 +26,8 @@ class UserSingIn extends StatefulWidget {
 }
 
 class _UserSingInState extends State<UserSingIn> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +56,13 @@ class _UserSingInState extends State<UserSingIn> {
               forgetPassword(context),
               reusableButton(context, "Sign In", colorCollection[1], () {
                 // ! firebase Auth
+                String welcomeMessage = 'Hoşgeldin';
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(welcomeMessage),
+                    backgroundColor: Colors.green,
+                  ),
+                );
               }),
               //signUpOption()
             ],
@@ -64,8 +71,6 @@ class _UserSingInState extends State<UserSingIn> {
       ),
     );
   }
-
-  
 
   Widget forgetPassword(BuildContext context) {
     return Container(

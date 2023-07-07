@@ -24,8 +24,8 @@ class Doctor_singIn extends StatefulWidget {
 }
 
 class _Doctor_singInState extends State<Doctor_singIn> {
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
   final log = logger(Doctor_singIn);
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => UserSingUp(),
+                  builder: (context) => const UserSingUp(),
                 ));
           },
           child: const Text(
@@ -103,7 +103,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
             textAlign: TextAlign.right,
           ),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
           }),
     );
   }

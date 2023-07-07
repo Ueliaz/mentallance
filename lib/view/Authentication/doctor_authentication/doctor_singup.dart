@@ -22,9 +22,9 @@ class UserSingUp extends StatefulWidget {
 }
 
 class _UserSingUpState extends State<UserSingUp> {
-  TextEditingController _userNameTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _userNameTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
