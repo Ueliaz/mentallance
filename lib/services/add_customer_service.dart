@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +9,14 @@ class CustomerService {
 
   Future<void> addCustomerService(String email, BuildContext context) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: generateRandomPassword(8),
       );
 
+      final user = userCredential.user;
       await resetPassword(email);
+      await addDanisanToCollection(user?.uid, email);
 
       print('New customer created with email: $email');
       showSuccessSnackBar(context, 'Danışan mailine şifre oluşturma bağlantısı gönderilmiştir.');
@@ -42,7 +45,29 @@ class CustomerService {
     try {
       await _auth.sendPasswordResetEmail(email: email);
     } catch (e) {
-      print('Error sending password reset email: $e');
+      print('Email gönderilemedi!!!: $e');
+    }
+  }
+
+  Future<void> addDanisanToCollection(String? userId, String email) async {
+    if (userId != null) {
+      final danisanData = {
+        'DanisanId': userId,
+        'DanisanEmail': email,
+        'GirisZamani': DateTime.now(),
+        'DanisanIsim': '',
+        'DanisanSoyisim': '',
+      };
+
+      try {
+        await FirebaseFirestore.instance
+            .collection('KayitOlanDanisan')
+            .doc(userId)
+            .set(danisanData);
+        print('Danışan kaydı başarıyla oluşturuldu.');
+      } catch (e) {
+        print('Koleksiyona kayıt gerçekleştirilemedi: $e');
+      }
     }
   }
 

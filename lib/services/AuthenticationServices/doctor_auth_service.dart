@@ -26,20 +26,34 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    ).then((value) { Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerList(),));
-      return value;
-     });
+    );
 
     User? user = userCredential.user;
     logg.v('Giris yapan doktor: ${user?.uid}');
 
-    FirebaseFirestore.instance.collection('GirisYapanDoktor').add({
-      'DoktorId': user?.uid,
-      'DoktorEmail': user?.email,
-      'GirisZamani': DateTime.now(),
-      'DoktorIsim': "",
-      'DoktorSoyIsim': "",
-    });
+    final doctorDoc = await FirebaseFirestore.instance
+        .collection('KayitOlanDoktor')
+        .doc(user?.uid)
+        .get();
+
+    if (!doctorDoc.exists) {
+      String welcomeMessage = 'Bu bilgiler doktora ait değil!!!';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(welcomeMessage),
+          backgroundColor: Colors.red,
+        ),
+      );
+      throw Exception('Bu kullanıcı doktor değil!');
+    } else {
+      FirebaseFirestore.instance.collection('GirisYapanDoktor').add({
+        'DoktorId': user?.uid,
+        'DoktorEmail': user?.email,
+        'GirisZamani': DateTime.now(),
+        'DoktorIsim': "",
+        'DoktorSoyIsim': "",
+      });
+    }
 
     logg.v('"GirisYapanDoktor" koleksiyonunda dokuman olusturuldu.');
 
@@ -49,6 +63,12 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         content: Text(welcomeMessage),
         backgroundColor: Colors.green,
       ),
+    );
+
+    // Giriş başarılı olduğunda gerekli yönlendirmeyi burada gerçekleştirebilirsiniz.
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CustomerList()),
     );
   } catch (e) {
     if (e is FirebaseAuthException) {
