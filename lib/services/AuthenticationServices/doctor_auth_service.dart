@@ -9,12 +9,14 @@ import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/theme/app_theme.dart';
 
-import '../components/assets.dart';
-import '../view/Doctor_interface/client_list_page/customer_list.dart';
+import '../../components/assets.dart';
+import '../../view/Doctor_interface/client_list_page/customer_list.dart';
 
-part 'package:mentallance/services/forgot_password_service.dart';
+part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
+part 'package:mentallance/services/AuthenticationServices/customer_auth_service.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
+part 'package:mentallance/view/Authentication/user_authentication/user_singin.dart';
 part 'package:mentallance/view/Authentication/forgot_password.dart';
 
 Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
