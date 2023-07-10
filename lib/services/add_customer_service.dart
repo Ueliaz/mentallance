@@ -16,7 +16,7 @@ class CustomerService {
       await resetPassword(email);
 
       print('New customer created with email: $email');
-      print('Password reset email sent successfully');
+      showSuccessSnackBar(context, 'Danışan mailine şifre oluşturma bağlantısı gönderilmiştir.');
     } catch (e) {
       print('Error adding customer: $e');
       // Show error dialog
@@ -30,7 +30,7 @@ class CustomerService {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Kapat'),
+              child: const Text('Kapat'),
             ),
           ],
         ),
@@ -58,5 +58,15 @@ class CustomerService {
     }
 
     return password;
+  }
+
+  void showSuccessSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 4),
+      ),
+    );
   }
 }
