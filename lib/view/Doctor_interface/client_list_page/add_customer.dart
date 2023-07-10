@@ -16,11 +16,12 @@ class AddClient extends StatefulWidget {
 class _AddClientState extends State<AddClient> {
   final TextEditingController _emailTextController = TextEditingController();
   final CustomerService _customerService = CustomerService(); // Create an instance of CustomerService
+  
 
   void addCustomerService() {
     String email = _emailTextController.text.trim();
 
-    _customerService.addCustomerService(email); // Call the addCustomerService method
+    _customerService.addCustomerService(email,context); // Call the addCustomerService method
 
     // Additional operations or UI updates can be performed here
   }
