@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
-import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
-import 'package:mentallance/theme/app_theme.dart';
+part of authentication;
+
 // import '../../../services/auth_service.dart';
 
 /*
@@ -56,13 +54,7 @@ class _UserSingInState extends State<UserSingIn> {
               forgetPassword(context),
               reusableButton(context, "Sign In", colorCollection[1], () {
                 // ! firebase Auth
-                String welcomeMessage = 'Hoşgeldin';
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(welcomeMessage),
-                    backgroundColor: Colors.green,
-                  ),
-                );
+                cusSingin(context,_emailTextController, _passwordTextController);
               }),
               //signUpOption()
             ],
@@ -85,12 +77,9 @@ class _UserSingInState extends State<UserSingIn> {
           ),
           onPressed: () {
             // ! firebase Auth
+            
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
           }),
     );
   }
-}
-
-@override
-AppBar customAppBarr(BuildContext context, String title) {
-  return AppBar(title: Text(title));
 }
