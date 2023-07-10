@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mentallance/components/assets.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/theme/app_theme.dart';
-import 'package:mentallance/view/Authentication/user_authentication/user_singin.dart';
-import '../../services/doctor_auth_service.dart';
+import '../../services/AuthenticationServices/doctor_auth_service.dart';
 
 class EntryPageView extends StatelessWidget {
   const EntryPageView({super.key});
