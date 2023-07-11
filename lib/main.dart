@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Mentallance',
       // theme: ,
       
-      home: AppointmentPage()
+      home: EntryPageView()
     );
   }
 }
