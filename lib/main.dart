@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mentallance/services/appointment_service.dart';
 import 'package:mentallance/view/entry_page/entry_page_view_mobile.dart';
 
 import 'firebase_options.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Mentallance',
       // theme: ,
       
-      home: EntryPageView()
+      home: AppointmentPage()
     );
   }
 }
