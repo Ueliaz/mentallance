@@ -3,28 +3,42 @@ part of authentication;
 Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
   try {
-    UserCredential userCredential =
+    final userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    ).then((value) { Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerList(),));
-      return value;
-     });
+    );
 
-    User? user = userCredential.user;
-    logg.v('Giris yapan doktor: ${user?.uid}');
+    final user = userCredential.user;
+    logg.v('Giriş yapan danışan: ${user?.uid}');
 
-    FirebaseFirestore.instance.collection('GirisYapanDoktor').add({
-      'DoktorId': user?.uid,
-      'DoktorEmail': user?.email,
-      'GirisZamani': DateTime.now(),
-      'DoktorIsim': "",
-      'DoktorSoyIsim': "",
+    final danisanDoc = await FirebaseFirestore.instance
+        .collection('KayitOlanDanisan')
+        .doc(user?.uid)
+        .get();
+
+    if (!danisanDoc.exists) {
+      String welcomeMessage = 'Bu bilgiler danışana ait değil!!!';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(welcomeMessage),
+          backgroundColor: Colors.red,
+        ),
+      );
+      throw Exception('Bu kullanıcı danışan değil!');
+    }
+
+    FirebaseFirestore.instance.collection('GirisYapanDanisan').add({
+      'DanisanId': user?.uid,
+      'DanisanEmail': user?.email,
+      'GirisZamanı': DateTime.now(),
+      'DanisanIsim': '',
+      'DanisanSoyisim': '',
     });
 
-    logg.v('"GirisYapanDoktor" koleksiyonunda dokuman olusturuldu.');
+    logg.v('"GirisYapanDanisan" koleksiyonunda belge oluşturuldu.');
 
-    String welcomeMessage = 'Hoşgeldin, ${user?.email}';
+    String welcomeMessage = 'Hoş geldiniz, ${user?.email}';
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(welcomeMessage),
