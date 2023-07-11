@@ -9,40 +9,12 @@ class AppointmentPage extends StatefulWidget {
 
 class _AppointmentPageState extends State<AppointmentPage> {
   DateTime today = DateTime.now();
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
     });
   }
-
-  Future<List<String>> getDoctorAppointments(String doctorId) async {
-  List<String> appointments = [];
-  
-
-  try {
-    DocumentSnapshot<Map<String, dynamic>> querySnapshot = await firestore
-        .collection('KayitOlanDoktor')
-        .doc(doctorId)
-        .get();
-
-    Map<String, dynamic>? data = querySnapshot.data();
-
-    if (data != null && data.containsKey('DoktorRandevu')) {
-      // Firestore'da randevu saatlerini sakladığınız varsayılarak,
-      // DoktorRandevu alanından saatleri alıyoruz.
-      data['DoktorRandevu'].forEach((key, value) {
-        appointments.add(value);
-      });
-    }
-  } catch (e) {
-    print('Randevu saatleri alınamadı: $e');
-  }
-
-  return appointments;
-}
-
 
   @override
   Widget build(BuildContext context) {
