@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class CustomerService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> addCustomerService(String email, BuildContext context) async {
+  Future<void> addCustomerService(String email, String doctorId, BuildContext context) async {
     try {
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -16,7 +16,8 @@ class CustomerService {
 
       final user = userCredential.user;
       await resetPassword(email);
-      await addDanisanToCollection(user?.uid, email);
+      await addDanisanToCollection(user?.uid, email, doctorId);
+      await addDanisanToDoktor(user?.uid, doctorId);
 
       print('New customer created with email: $email');
       showSuccessSnackBar(context, 'Danışan mailine şifre oluşturma bağlantısı gönderilmiştir.');
@@ -49,7 +50,7 @@ class CustomerService {
     }
   }
 
-  Future<void> addDanisanToCollection(String? userId, String email) async {
+  Future<void> addDanisanToCollection(String? userId, String email, String doctorId) async {
     if (userId != null) {
       final danisanData = {
         'DanisanId': userId,
@@ -57,13 +58,11 @@ class CustomerService {
         'GirisZamani': DateTime.now(),
         'DanisanIsim': '',
         'DanisanSoyisim': '',
+        'DoktorId': doctorId, // Doktorun ID'sini danışan verisine ekleyin
       };
 
       try {
-        await FirebaseFirestore.instance
-            .collection('KayitOlanDanisan')
-            .doc(userId)
-            .set(danisanData);
+        await FirebaseFirestore.instance.collection('KayitOlanDanisan').doc(userId).set(danisanData);
         print('Danışan kaydı başarıyla oluşturuldu.');
       } catch (e) {
         print('Koleksiyona kayıt gerçekleştirilemedi: $e');
@@ -71,9 +70,21 @@ class CustomerService {
     }
   }
 
+  Future<void> addDanisanToDoktor(String? danisanId, String doctorId) async {
+    if (danisanId != null) {
+      try {
+        await FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(doctorId).update({
+          'Danisanlar': FieldValue.arrayUnion([danisanId]),
+        });
+        print('Danisan, doktorun "Danisanlar" dizisine eklendi.');
+      } catch (e) {
+        print('Danisan, doktora eklenirken hata oluştu: $e');
+      }
+    }
+  }
+
   String generateRandomPassword(int length) {
-    String characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     Random random = Random();
     String password = '';
 
