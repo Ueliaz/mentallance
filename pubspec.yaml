@@ -43,7 +43,7 @@ dependencies:
   logger: ^1.4.0
   table_calendar: ^3.0.9  
 
-
+  intl: ^0.18.0
   
 
 dev_dependencies:
