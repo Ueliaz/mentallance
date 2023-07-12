@@ -1,4 +1,4 @@
-
+part of appointment;
 /*
 void main() {
   runApp(MyApp());
