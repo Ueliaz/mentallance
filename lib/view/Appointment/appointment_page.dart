@@ -8,6 +8,7 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
+  bool isAppointmentAvailable = true;
   DateTime today = DateTime.now();
   String doctorId = '';
   String selectedTime = '';
@@ -29,24 +30,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
         .get();
 
     if (existingAppointmentSnapshot.docs.isNotEmpty) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Hata'),
-            content: const Text(
-                'Seçilen saatte başka bir randevu bulunuyor. Lütfen başka bir saat seçin.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Tamam'),
-              ),
-            ],
-          );
-        },
-      );
+      setState(() {
+        isAppointmentAvailable = false;
+      });
       return;
     }
 
@@ -57,7 +43,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
       'RandevuSaati': selectedTime,
     });
 
-    showDialog(
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -116,7 +102,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 List<String> availableTimes =
                     await getAvailableAppointmentTimes(doctorId);
 
-                showDialog(
+                await showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return StatefulBuilder(
@@ -142,6 +128,29 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           actions: [
                             TextButton(
                               onPressed: () async {
+                                if (!isAppointmentAvailable) {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Hata'),
+                                        content: const Text(
+                                          'Seçilen saatte başka bir randevu bulunuyor. Lütfen başka bir saat seçin.',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Tamam'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+
                                 if (availableTimes.contains(selectedTime)) {
                                   await addAppointment(
                                       doctorId,
@@ -149,7 +158,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                       selectedTime);
                                   Navigator.of(context).pop();
                                 } else {
-                                  showDialog(
+                                  await showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
