@@ -14,23 +14,28 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> addAppointment(
       String selectedDoctorId, String userId, String selectedTime) async {
-    // Kullanıcının doktorunu almak için veritabanından sorgu yapın
     final userSnapshot = await FirebaseFirestore.instance
         .collection('KayitOlanDanisan')
         .doc(userId)
         .get();
 
-    // Kullanıcının doktorId değerini alın
     final userDoctorId = userSnapshot['DoktorId'];
 
-    // Kullanıcının doktoru yoksa hata mesajı gösterin
-    if (userDoctorId == null || userDoctorId.isEmpty) {
+    final existingAppointmentSnapshot = await FirebaseFirestore.instance
+        .collection('Randevular')
+        .where('DoktorId', isEqualTo: userDoctorId)
+        .where('RandevuTarihi', isEqualTo: today)
+        .where('RandevuSaati', isEqualTo: selectedTime)
+        .get();
+
+    if (existingAppointmentSnapshot.docs.isNotEmpty) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Hata'),
-            content: const Text('Kullanıcının atanmış bir doktoru yok.'),
+            content: const Text(
+                'Seçilen saatte başka bir randevu bulunuyor. Lütfen başka bir saat seçin.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -45,7 +50,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
       return;
     }
 
-    // Seçilen doktorId değerini Randevular koleksiyonuna ekle
     await FirebaseFirestore.instance.collection('Randevular').add({
       'DoktorId': userDoctorId,
       'DanisanId': userId,
@@ -53,13 +57,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
       'RandevuSaati': selectedTime,
     });
 
-    // Randevu başarıyla eklendiyse kullanıcıya mesaj gösterin
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Başarılı'),
-          content: const Text('Randevu başarıyla eklendi.'),
+          content: const Text('Randevu başarıyla alındı.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -75,7 +78,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<List<String>> getAvailableAppointmentTimes(String doctorId) async {
     final appointmentsSnapshot = await FirebaseFirestore.instance
-        .collection('KayitOlanDanisan')
+        .collection('Randevular')
         .where('DoktorId', isEqualTo: doctorId)
         .get();
 
@@ -91,7 +94,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     ];
 
     final List reservedAppointmentTimes =
-        appointmentsSnapshot.docs.map((doc) => doc['RandevuTarihi']).toList();
+        appointmentsSnapshot.docs.map((doc) => doc['RandevuSaati']).toList();
 
     final List<String> availableAppointmentTimes = allAppointmentTimes
         .where((time) => !reservedAppointmentTimes.contains(time))
@@ -110,65 +113,67 @@ class _AppointmentPageState extends State<AppointmentPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                // Veritabanından randevu saatlerini al
                 List<String> availableTimes =
                     await getAvailableAppointmentTimes(doctorId);
 
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Randevu Saatini Seçin'),
-                      content: SingleChildScrollView(
-                        child: Column(
-                          children: availableTimes.map((time) {
-                            return RadioListTile(
-                              title: Text(time),
-                              value: time,
-                              groupValue: selectedTime,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedTime = value!;
-                                });
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            if (availableTimes.contains(selectedTime)) {
-                              await addAppointment(
-                                  doctorId,
-                                  FirebaseAuth.instance.currentUser!.uid,
-                                  selectedTime);
-                              Navigator.of(context).pop();
-                            } else {
-                              // Kullanıcı bir saat seçmediğinde hata mesajı gösterin
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Hata'),
-                                    content:
-                                        const Text('Lütfen bir saat seçin.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('Tamam'),
-                                      ),
-                                    ],
+                    return StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return AlertDialog(
+                          title: const Text('Randevu Saatini Seçin'),
+                          content: SingleChildScrollView(
+                            child: Column(
+                              children: availableTimes.map((time) {
+                                return RadioListTile(
+                                  title: Text(time),
+                                  value: time,
+                                  groupValue: selectedTime,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedTime = value!;
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () async {
+                                if (availableTimes.contains(selectedTime)) {
+                                  await addAppointment(
+                                      doctorId,
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                      selectedTime);
+                                  Navigator.of(context).pop();
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Hata'),
+                                        content: const Text(
+                                            'Lütfen bir saat seçin.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Tamam'),
+                                          ),
+                                        ],
+                                      );
+                                    },
                                   );
-                                },
-                              );
-                            }
-                          },
-                          child: const Text('Seç'),
-                        ),
-                      ],
+                                }
+                              },
+                              child: const Text('Seç'),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
                 );
