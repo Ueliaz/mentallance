@@ -3,9 +3,9 @@ library customer;
 import 'package:flutter/material.dart';
 
 import '../../../components/reusable_widgets/reusable_button.dart';
+import '../../../services/task_assignment.dart';
 import '../../../theme/app_theme.dart';
 import 'add_customer.dart';
-
 
 class CustomerList extends StatefulWidget {
   const CustomerList({super.key});
@@ -26,8 +26,24 @@ class _CustomerListState extends State<CustomerList> {
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
                     context, 'YENİ DANISAN Ekle', colorCollection[1], () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>const AddClient() ,) );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddClient(),
+                      ));
                 }),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: reusableButton(
+                    context, 'gorev ekleme ekrani', colorCollection[1], () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TaskAssignmentPage(),
+                      ));
+                }),
+
               ),
             ],
           ),
