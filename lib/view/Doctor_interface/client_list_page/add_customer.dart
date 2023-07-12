@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../components/assets.dart';
 import '../../../components/reusable_widgets/reusable_button.dart';
 import '../../../components/reusable_widgets/reusable_text_field.dart';
 import '../../../services/add_customer_service.dart';
 import '../../../theme/app_theme.dart';
+
 // Import the CustomerService class
 
 class AddClient extends StatefulWidget {
@@ -19,9 +21,11 @@ class _AddClientState extends State<AddClient> {
   
 
   void addCustomerService() {
-    String email = _emailTextController.text.trim();
+    final FirebaseAuth auth = FirebaseAuth.instance;
 
-    _customerService.addCustomerService(email,context); // Call the addCustomerService method
+    String email = _emailTextController.text.trim();
+    String doctorId = auth.currentUser?.uid ?? ''; // Doktorun ID'sini al
+    _customerService.addCustomerService(email, doctorId, context); // Call the addCustomerService method with the doctorId // Call the addCustomerService method
 
     // Additional operations or UI updates can be performed here
   }

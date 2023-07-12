@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/logger.dart';
+import 'package:mentallance/services/appointment_service.dart';
 import 'package:mentallance/theme/app_theme.dart';
 
 import '../../components/assets.dart';
@@ -107,34 +108,32 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   }
 }
 
-void docSingUp(
-    BuildContext context, econtroller, pcontroller, unamecontroller) async {
+void docSingUp(BuildContext context, econtroller, pcontroller, unamecontroller) async {
   final logg = logger(Doctor_singIn);
   try {
     String email = econtroller.text;
     String password = pcontroller.text;
 
-    UserCredential userCredential =
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    // Doktor olusturuluyor
+    // Doktor oluşturuluyor
     User? user = userCredential.user;
-    logg.i('Doktor Kaydi Gerceklesitirildi: ${user?.uid}');
+    logg.i('Doktor Kaydı Gerçekleştirildi: ${user?.uid}');
 
-    // KayitOlanDoktor koleksiyonunda doküman olusturuluyor.
-    await FirebaseFirestore.instance
-        .collection('KayitOlanDoktor')
-        .doc(user?.uid)
-        .set({
+    // KayitOlanDoktor koleksiyonunda doküman oluşturuluyor.
+    await FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(user?.uid).set({
       'DoktorIsim': unamecontroller.text,
-      'DoktorSoyisim': " ",
+      'DoktorSoyisim': '',
       'DoktorEmail': email,
+      'DoktorId': user?.uid,
+      'DoktorRandevu': ['08.00', '09.00', '10:00', '11:00', '13.00', '14:00', '15.00', '16.00'],
+      'Danisanlar': [], // Başlangıçta boş bir danışanlar listesi ekleniyor
     });
 
-    logg.i('"KayitOlanDoktor" koleksiyonunda dokuman olusturuldu.');
+    logg.i('"KayitOlanDoktor" koleksiyonunda doküman oluşturuldu.');
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -146,9 +145,7 @@ void docSingUp(
     if (!user!.emailVerified) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(
-            'Lütfen e-posta adresinizi doğrulayın. Doğrulama e-postası gönderildi.',
-          ),
+          content: Text('Lütfen e-posta adresinizi doğrulayın. Doğrulama e-postası gönderildi.'),
           backgroundColor: Colors.blue,
         ),
       );
@@ -160,9 +157,10 @@ void docSingUp(
         ),
       );
     }
+
     await user.sendEmailVerification();
   } catch (e) {
-    String errorMessage = 'Kayıt işlemi gerçekleştirilemedi.Tekrar deneyiniz.';
+    String errorMessage = 'Kayıt işlemi gerçekleştirilemedi. Tekrar deneyiniz.';
     String errorMessage1 = '';
     logg.e(errorMessage);
 
@@ -183,8 +181,7 @@ void docSingUp(
           ),
         );
       } else if (e.code == 'email-already-in-use') {
-        errorMessage1 =
-            'Bu mail adresi zaten kayıtlı.Farklı bir adres deneyiniz.';
+        errorMessage1 = 'Bu mail adresi zaten kayıtlı. Farklı bir adres deneyiniz.';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(errorMessage1),
