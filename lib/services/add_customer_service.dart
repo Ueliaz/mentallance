@@ -70,18 +70,25 @@ class CustomerService {
     }
   }
 
-  Future<void> addDanisanToDoktor(String? danisanId, String doctorId) async {
-    if (danisanId != null) {
-      try {
-        await FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(doctorId).update({
-          'Danisanlar': FieldValue.arrayUnion([danisanId]),
-        });
-        print('Danisan, doktorun "Danisanlar" dizisine eklendi.');
-      } catch (e) {
-        print('Danisan, doktora eklenirken hata oluştu: $e');
-      }
+ Future<void> addDanisanToDoktor(String? danisanId, String doctorId) async {
+  if (danisanId != null) {
+    try {
+      final doctorRef = FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(doctorId);
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+        final doctorSnapshot = await transaction.get(doctorRef);
+        final danisanlarList = doctorSnapshot.data()?['Danisanlar'] ?? [];
+
+        if (!danisanlarList.contains(danisanId)) {
+          danisanlarList.add(danisanId);
+          transaction.update(doctorRef, {'Danisanlar': danisanlarList});
+          print('Danisan, doktorun "Danisanlar" dizisine eklendi.');
+        }
+      });
+    } catch (e) {
+      print('Danisan, doktora eklenirken hata oluştu: $e');
     }
   }
+}
 
   String generateRandomPassword(int length) {
     String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
