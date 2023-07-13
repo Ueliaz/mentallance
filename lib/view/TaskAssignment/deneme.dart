@@ -1,5 +1,4 @@
 part of TaskAssignment;
-
 class MyWidget extends StatefulWidget {
   const MyWidget({Key? key});
 
@@ -8,7 +7,7 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  late List<String> patients = [];
+  late List<Map<String, dynamic>> patients = [];
 
   @override
   void initState() {
@@ -22,16 +21,15 @@ class _MyWidgetState extends State<MyWidget> {
       if (currentUser != null) {
         final doctorId = currentUser.uid;
         final snapshot = await FirebaseFirestore.instance
-            .collection('KayitOlanDoktor')
-            .doc(doctorId)
+            .collection('KayitOlanDanisan')
+            .where('DoktorId', isEqualTo: doctorId)
             .get();
 
-        final List<String> patientsList = [];
+        final List<Map<String, dynamic>> patientsList = [];
 
-        final danisanlar = snapshot.data()?['Danisanlar'] as List<dynamic>;
-        danisanlar.forEach((danisan) {
-          final patientId = danisan.toString();
-          patientsList.add(patientId);
+        snapshot.docs.forEach((doc) {
+          final patientData = doc.data();
+          patientsList.add(patientData);
         });
 
         setState(() {
@@ -43,11 +41,11 @@ class _MyWidgetState extends State<MyWidget> {
     }
   }
 
-  void navigateToHastaGorev(String patientId) {
+  void navigateToHastaGorev(String patientId, String patientEmail) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HastaGorevPage(patientId: patientId),
+        builder: (context) => HastaGorevPage(patientId: patientId,patientEmail: patientEmail,),
       ),
     );
   }
@@ -63,17 +61,19 @@ class _MyWidgetState extends State<MyWidget> {
                 ? ListView.builder(
                     itemCount: patients.length,
                     itemBuilder: (context, index) {
-                      final patientId = patients[index];
+                      final patientId = patients[index]['DanisanId'];
+                      final patientEmail = patients[index]['DanisanEmail'];
                       return ListTile(
-                        title: Text(patientId),
+                        title: Text('ID: $patientId'),
+                        subtitle: Text('Email: $patientEmail'),
                         onTap: () {
-                          navigateToHastaGorev(patientId);
+                          navigateToHastaGorev(patientId, patientEmail);
                         },
                       );
                     },
                   )
                 : Center(
-                    child: Text('Hastalar yükleniyor...'),
+                    child: CircularProgressIndicator(),
                   ),
           ),
         ],
@@ -84,8 +84,8 @@ class _MyWidgetState extends State<MyWidget> {
 
 class HastaGorevPage extends StatefulWidget {
   final String patientId;
-
-  const HastaGorevPage({required this.patientId});
+  final String patientEmail;
+  const HastaGorevPage({required this.patientId, required this.patientEmail,});
 
   @override
   State<HastaGorevPage> createState() => _HastaGorevPageState();
@@ -149,6 +149,7 @@ class _HastaGorevPageState extends State<HastaGorevPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Hasta ID: ${widget.patientId}'),
+            Text('E-posta: ${widget.patientEmail}'),
             SizedBox(height: 16),
             Text('Görev Başlığı:'),
             TextField(

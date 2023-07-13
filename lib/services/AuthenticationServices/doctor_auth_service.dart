@@ -8,6 +8,7 @@ import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/services/appointment_service.dart';
+import 'package:mentallance/services/task_assignment.dart';
 import 'package:mentallance/theme/app_theme.dart';
 
 import '../../components/assets.dart';
@@ -69,7 +70,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
     // Giriş başarılı olduğunda gerekli yönlendirmeyi burada gerçekleştirebilirsiniz.
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const CustomerList()),
+      MaterialPageRoute(builder: (context) => const MyWidget()),
     );
   } catch (e) {
     if (e is FirebaseAuthException) {
