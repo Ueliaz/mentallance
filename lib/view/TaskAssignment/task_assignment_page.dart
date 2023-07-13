@@ -1,6 +1,8 @@
 part of TaskAssignment;
 
 class TaskAssignmentPage extends StatefulWidget {
+  const TaskAssignmentPage({super.key});
+
   @override
   _TaskAssignmentPageState createState() => _TaskAssignmentPageState();
 }
@@ -8,11 +10,46 @@ class TaskAssignmentPage extends StatefulWidget {
 class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  Completer _primaryCompleter = Completer();
+
+  var DoktorId;
+
+  var DanisanId;
+
+  late String taskId;
+
+  Future<String?> getDoctorId(String taskId) {
+    DocumentReference taskRef =
+        FirebaseFirestore.instance.collection('Gorevler').doc(taskId);
+    return taskRef.get().then((task) {
+      Map<String, dynamic>? taskData = task.data() as Map<String, dynamic>?;
+      return taskData?['doktorId'];
+    });
+  }
+
+  Future<String?> getPatientId(String taskId) {
+    DocumentReference taskRef =
+        FirebaseFirestore.instance.collection('Gorevler').doc(taskId);
+    return taskRef.get().then((task) {
+      Map<String, dynamic>? taskData = task.data() as Map<String, dynamic>?;
+      return taskData?['hastaId'];
+    });
+  }
+
+  Future<bool> isTaskCompleted(String taskId) {
+    DocumentReference taskRef =
+        FirebaseFirestore.instance.collection('Gorevler').doc(taskId);
+    return taskRef.get().then((task) {
+      Map<String, dynamic>? taskData = task.data() as Map<String, dynamic>?;
+      return taskData?['tamamlandi'] ?? false;
+    });
+  }
 
   @override
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
+    _primaryCompleter.complete();
     super.dispose();
   }
 
@@ -27,7 +64,6 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            
             SizedBox(height: 8.0),
             Container(
               decoration: BoxDecoration(
@@ -44,7 +80,6 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
               ),
             ),
             Spacer(),
-            
             SizedBox(height: 8.0),
             Container(
               decoration: BoxDecoration(
@@ -63,12 +98,23 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Ekle butonuna basıldığında yapılacak işlemler
                 String title = _titleController.text;
                 String description = _descriptionController.text;
+                String? doctorId = await getDoctorId(taskId);
+                String? patientId = await getPatientId(taskId);
 
                 // Görev verilerini kullanarak işlemler yapabilirsiniz, örneğin veritabanına kaydetme gibi.
+                // Örneğin, Firebase Firestore'a bir görev kaydetmek için aşağıdaki kodu kullanabilirsiniz:
+                FirebaseFirestore.instance.collection('Gorevler').add({
+                  'baslik': title,
+                  'aciklama': description,
+                  'doktorId': DoktorId,
+                  'hastaId': DanisanId,
+                  'tamamlandi': false,
+                });
+                _primaryCompleter.complete();
               },
               child: Text('Ekle'),
             ),
@@ -78,4 +124,3 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
     );
   }
 }
-
