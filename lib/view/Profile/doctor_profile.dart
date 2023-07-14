@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class DoctorProfilePage extends StatefulWidget {
+  const DoctorProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _DoctorProfilePageState createState() => _DoctorProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _DoctorProfilePageState extends State<DoctorProfilePage> {
   String name = 'İsim Soyisim';
 
   @override
@@ -54,9 +53,12 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(width: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Mesaj gönderme işlemini gerçekleştir
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WriteBlogPage()),
+                  );
                 },
-                child: const Text('Mesaj Gönder'),
+                child: const Text('Blog Yaz'),
               ),
             ],
           ),
@@ -65,6 +67,57 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+class WriteBlogPage extends StatelessWidget {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Blog Yazısı Oluştur'),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: 'Başlık',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _contentController,
+              maxLines: 10,
+              decoration: const InputDecoration(
+                labelText: 'Yazı',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Perform blog post creation logic
+                String title = _titleController.text;
+                String content = _contentController.text;
+
+                // Add your logic to save the blog post or perform other operations
+
+                // Navigate back to the profile page
+                Navigator.pop(context);
+              },
+              child: const Text('Gönder'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 class EditProfilePage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
