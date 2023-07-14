@@ -3,11 +3,14 @@ part of authentication;
 Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
   try {
-    final userCredential =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+    final userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    );
+    ).then((value) {
+     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => AnketDoldur(),), (route) => false); 
+      return value;
+    });
 
     final user = userCredential.user;
     logg.v('Giriş yapan danışan: ${user?.uid}');

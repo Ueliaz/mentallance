@@ -13,6 +13,7 @@ import 'package:mentallance/theme/app_theme.dart';
 
 import '../../components/assets.dart';
 import '../../view/Doctor_interface/client_list_page/customer_list.dart';
+import '../../view/Survey/survey.dart';
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
 part 'package:mentallance/services/AuthenticationServices/customer_auth_service.dart';
@@ -28,7 +29,10 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    );
+    ).then((value) {
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyWidget()), (route) => false);
+      return value;
+    });
 
     User? user = userCredential.user;
     logg.v('Giris yapan doktor: ${user?.uid}');
