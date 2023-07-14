@@ -29,7 +29,10 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    );
+    ).then((value) {
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyWidget()), (route) => false);
+      return value;
+    });
 
     User? user = userCredential.user;
     logg.v('Giris yapan doktor: ${user?.uid}');

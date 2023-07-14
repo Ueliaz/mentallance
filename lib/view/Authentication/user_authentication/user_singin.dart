@@ -57,8 +57,6 @@ class _UserSingInState extends State<UserSingIn> {
                 cusSingin(
                     context, _emailTextController, _passwordTextController);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashScreen()));
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AnketDoldur()));
               }),
               //signUpOption()
             ],
