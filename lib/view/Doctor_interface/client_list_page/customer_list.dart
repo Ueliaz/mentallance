@@ -40,7 +40,7 @@ class _CustomerListState extends State<CustomerList> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TaskAssignmentPage(),
+                        builder: (context) => const TaskAssignmentPage(),
                       ));
                 }),
 

@@ -8,9 +8,9 @@ class TaskAssignmentPage extends StatefulWidget {
 }
 
 class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  Completer _primaryCompleter = Completer();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final Completer _primaryCompleter = Completer();
 
   var DoktorId;
 
@@ -57,14 +57,14 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Görev Atama Sayfası'),
+        title: const Text('Görev Atama Sayfası'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
@@ -72,15 +72,15 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
               ),
               child: TextField(
                 controller: _titleController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Görev Başlığı',
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(8.0),
                 ),
               ),
             ),
-            Spacer(),
-            SizedBox(height: 8.0),
+            const Spacer(),
+            const SizedBox(height: 8.0),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
@@ -89,14 +89,14 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
               child: TextField(
                 controller: _descriptionController,
                 maxLines: 5,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Görev Açıklaması',
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(8.0),
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
                 // Ekle butonuna basıldığında yapılacak işlemler
@@ -116,7 +116,7 @@ class _TaskAssignmentPageState extends State<TaskAssignmentPage> {
                 });
                 _primaryCompleter.complete();
               },
-              child: Text('Ekle'),
+              child: const Text('Ekle'),
             ),
           ],
         ),

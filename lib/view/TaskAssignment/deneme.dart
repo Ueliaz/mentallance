@@ -1,6 +1,6 @@
 part of TaskAssignment;
 class MyWidget extends StatefulWidget {
-  const MyWidget({Key? key});
+  const MyWidget({super.key, Key? key});
 
   @override
   State<MyWidget> createState() => _MyWidgetState();
@@ -27,10 +27,10 @@ class _MyWidgetState extends State<MyWidget> {
 
         final List<Map<String, dynamic>> patientsList = [];
 
-        snapshot.docs.forEach((doc) {
+        for (var doc in snapshot.docs) {
           final patientData = doc.data();
           patientsList.add(patientData);
-        });
+        }
 
         setState(() {
           patients = patientsList;
@@ -55,7 +55,7 @@ class _MyWidgetState extends State<MyWidget> {
     return Scaffold(
       body: Column(
         children: [
-          Text('Doktorun Hastaları:'),
+          const Text('Doktorun Hastaları:'),
           Expanded(
             child: patients.isNotEmpty
                 ? ListView.builder(
@@ -72,7 +72,7 @@ class _MyWidgetState extends State<MyWidget> {
                       );
                     },
                   )
-                : Center(
+                : const Center(
                     child: CircularProgressIndicator(),
                   ),
           ),
@@ -85,7 +85,7 @@ class _MyWidgetState extends State<MyWidget> {
 class HastaGorevPage extends StatefulWidget {
   final String patientId;
   final String patientEmail;
-  const HastaGorevPage({required this.patientId, required this.patientEmail,});
+  const HastaGorevPage({super.key, required this.patientId, required this.patientEmail,});
 
   @override
   State<HastaGorevPage> createState() => _HastaGorevPageState();
@@ -129,7 +129,7 @@ class _HastaGorevPageState extends State<HastaGorevPage> {
       await newGorevRef.update({'GorevId': newGorevId});
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Danışana görev atandı.'),
         ),
       );
@@ -145,7 +145,7 @@ class _HastaGorevPageState extends State<HastaGorevPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hasta Görev Sayfası'),
+        title: const Text('Hasta Görev Sayfası'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -154,20 +154,20 @@ class _HastaGorevPageState extends State<HastaGorevPage> {
           children: [
             Text('Hasta ID: ${widget.patientId}'),
             Text('E-posta: ${widget.patientEmail}'),
-            SizedBox(height: 16),
-            Text('Görev Başlığı:'),
+            const SizedBox(height: 16),
+            const Text('Görev Başlığı:'),
             TextField(
               controller: _baslikController,
             ),
-            SizedBox(height: 16),
-            Text('Görev Açıklama:'),
+            const SizedBox(height: 16),
+            const Text('Görev Açıklama:'),
             TextField(
               controller: _aciklamaController,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _gorevAta,
-              child: Text('Görev Ata'),
+              child: const Text('Görev Ata'),
             ),
           ],
         ),

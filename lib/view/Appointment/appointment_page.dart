@@ -77,7 +77,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       actions: [
                         TextButton(
                           onPressed: () async {
-                            if (selectedTime != null  && availableTimes.contains(selectedTime)) {
+                            if (availableTimes.contains(selectedTime)) {
                               // Seçilen randevu saati, müsait saatler arasında yer alıyor
 
   // Veritabanına randevu kaydını eklemek için gerekli işlemleri gerçekleştirin

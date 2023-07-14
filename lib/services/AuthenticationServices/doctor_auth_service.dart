@@ -7,12 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/logger.dart';
-import 'package:mentallance/services/appointment_service.dart';
 import 'package:mentallance/services/task_assignment.dart';
 import 'package:mentallance/theme/app_theme.dart';
 
 import '../../components/assets.dart';
-import '../../view/Doctor_interface/client_list_page/customer_list.dart';
 import '../../view/Survey/survey.dart';
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';

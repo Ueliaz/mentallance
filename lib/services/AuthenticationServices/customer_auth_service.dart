@@ -8,7 +8,7 @@ Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
       email: econtroller.text,
       password: pcontroller.text,
     ).then((value) {
-     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => AnketDoldur(),), (route) => false); 
+     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const AnketDoldur(),), (route) => false); 
       return value;
     });
 

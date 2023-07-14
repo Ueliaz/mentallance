@@ -74,10 +74,10 @@ class _OdevListeState extends State<OdevListe> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Görevler'),
+      title: const Text('Görevler'),
     ),
     body: gorevler.isEmpty
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(),
           )
         : ListView.builder(

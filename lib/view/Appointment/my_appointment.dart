@@ -1,6 +1,8 @@
 part of appointment;
 
 class CalendarScreen extends StatefulWidget {
+  const CalendarScreen({super.key});
+
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
 }
@@ -16,13 +18,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Takvim'),
+        title: const Text('Takvim'),
       ),
       body: Column(
         children: [
           TableCalendar(
-            firstDay: _focusedDay.subtract(Duration(days: 7)),
-            lastDay: _focusedDay.add(Duration(days: 7)),
+            firstDay: _focusedDay.subtract(const Duration(days: 7)),
+            lastDay: _focusedDay.add(const Duration(days: 7)),
             calendarFormat: _calendarFormat,
             focusedDay: _focusedDay,
             selectedDayPredicate: (day) {
@@ -40,7 +42,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               });
             },
             calendarStyle: CalendarStyle(
-              selectedDecoration: BoxDecoration(
+              selectedDecoration: const BoxDecoration(
                 color: Colors.blue,
                 shape: BoxShape.circle,
               ),
@@ -48,12 +50,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 color: Colors.grey[300],
                 shape: BoxShape.circle,
               ),
-              todayTextStyle: TextStyle(
+              todayTextStyle: const TextStyle(
                 color: Colors.black,
               ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(topBarTitles.length, (index) {
@@ -64,7 +66,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 child: Center(
                   child: Text(
                     topBarTitles[index],
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
