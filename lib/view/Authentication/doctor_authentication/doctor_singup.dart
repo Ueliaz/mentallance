@@ -54,7 +54,7 @@ class _UserSingUpState extends State<UserSingUp> {
             const SizedBox(
               height: 20,
             ),
-            reusableButton(context, "Sign Up", colorCollection[1], (){
+            reusableButton(context, "Sign Up",  (){
               docSingUp(context,_emailTextController, _passwordTextController,_userNameTextController);
 
               //TODO ;

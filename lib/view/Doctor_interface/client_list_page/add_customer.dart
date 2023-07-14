@@ -4,7 +4,7 @@ import '../../../components/assets.dart';
 import '../../../components/reusable_widgets/reusable_button.dart';
 import '../../../components/reusable_widgets/reusable_text_field.dart';
 import '../../../services/add_customer_service.dart';
-import '../../../theme/app_theme.dart';
+
 
 // Import the CustomerService class
 
@@ -48,8 +48,7 @@ class _AddClientState extends State<AddClient> {
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
                   context,
-                  'YENİ DANISAN KAYIT',
-                  colorCollection[1],
+                  'YENİ DANISAN KAYIT',             
                   addCustomerService, // Call the addCustomerService method when the button is pressed
                 ),
               ),

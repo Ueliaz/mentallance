@@ -8,7 +8,6 @@ import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/services/task_assignment.dart';
-import 'package:mentallance/theme/app_theme.dart';
 
 import '../../components/assets.dart';
 import '../../view/Survey/survey.dart';
@@ -23,12 +22,16 @@ part 'package:mentallance/view/Authentication/forgot_password.dart';
 Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
   try {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    ).then((value) {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyWidget()), (route) => false);
+    )
+        .then((value) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MyWidget()),
+          (route) => false);
       return value;
     });
 

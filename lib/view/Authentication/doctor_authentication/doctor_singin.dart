@@ -1,7 +1,5 @@
 part of authentication;
 
-
-
 /*
 ! Bu dosyada Olanlar
 
@@ -34,31 +32,36 @@ class _Doctor_singInState extends State<Doctor_singIn> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
-              20, MediaQuery.of(context).size.height * 0.2, 20, 0),
+              20, MediaQuery.of(context).size.height * 0.1, 20, 0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Image.asset(
+                auth,
+                height: 150,
+                width: 150,
+              ),
               //logoWidget("assets/images/logo1.png"),
               const SizedBox(
                 height: 30,
               ),
-              reusableTextField("Kullanıcı Adınızı giriniz",
+              reusableTextField("Email Adresinizi Giriniz",
                   Icons.person_outline, false, _emailTextController),
               const SizedBox(
                 height: 20,
               ),
-              reusableTextField("Şifrenizi giriniz", Icons.lock_outline, true,
+              reusableTextField("Şifrenizi Giriniz", Icons.lock_outline, true,
                   _passwordTextController),
               const SizedBox(
                 height: 5,
               ),
               forgetPassword(context),
               // docSingIn(context, _emailTextController, _passwordTextController),
-         
-              reusableButton(context, "Sign In", colorCollection[1], (){
-                docSingin(context,_emailTextController, _passwordTextController);
-                //FNavigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) => CilendList(),), (route) => false);
 
+              reusableButton(context, "Sign In", () {
+                docSingin(
+                    context, _emailTextController, _passwordTextController);
+                //FNavigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) => CilendList(),), (route) => false);
               }),
               signUpOption()
             ],
@@ -73,7 +76,10 @@ class _Doctor_singInState extends State<Doctor_singIn> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("Henüz bir hesaba sahip değil misiniz?",
-            style: TextStyle(color: Colors.black)),
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.w400)),
         GestureDetector(
           onTap: () {
             Navigator.push(
@@ -103,7 +109,10 @@ class _Doctor_singInState extends State<Doctor_singIn> {
             textAlign: TextAlign.right,
           ),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ForgotPassword()));
           }),
     );
   }
@@ -113,5 +122,3 @@ class _Doctor_singInState extends State<Doctor_singIn> {
 AppBar customAppBarr(BuildContext context, String title) {
   return AppBar(title: Text(title));
 }
-
-

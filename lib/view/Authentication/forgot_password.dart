@@ -22,7 +22,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
-                    context, 'Şifremi Unuttum', colorCollection[1], () {
+                    context, 'Şifremi Unuttum',  () {
                       resetPassword(context,_emailTextController);
 
                      }),

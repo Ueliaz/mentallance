@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mentallance/services/task_assignment.dart';
 
 import '../../../components/reusable_widgets/reusable_button.dart';
-import '../../../theme/app_theme.dart';
+
 import 'add_customer.dart';
 
 class CustomerList extends StatefulWidget {
@@ -25,7 +25,7 @@ class _CustomerListState extends State<CustomerList> {
               Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
-                    context, 'YENİ DANISAN Ekle', colorCollection[1], () {
+                    context, 'YENİ DANISAN Ekle',  () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -36,7 +36,7 @@ class _CustomerListState extends State<CustomerList> {
               Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: reusableButton(
-                    context, 'gorev ekleme ekrani', colorCollection[1], () {
+                    context, 'gorev ekleme ekrani',  () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

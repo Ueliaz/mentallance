@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-import '../../theme/app_theme.dart';
 
 
 
@@ -40,8 +39,8 @@ class FrostedGlassBox extends StatelessWidget {
                 gradient: LinearGradient(
               colors: [
 
-                colorCollection[0].withOpacity(0.05),
-                colorCollection[0].withOpacity(0.015),
+                Colors.white.withOpacity(0.05),
+                Colors.white.withOpacity(0.015),
                 
               ],
               begin: Alignment.topCenter,

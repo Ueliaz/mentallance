@@ -33,10 +33,15 @@ class _UserSingInState extends State<UserSingIn> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
-              20, MediaQuery.of(context).size.height * 0.2, 20, 0),
+              20, MediaQuery.of(context).size.height * 0.1, 20, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+                   Image.asset(
+                auth,
+                height: 150,
+                width: 150,
+              ),
               //logoWidget("assets/images/logo1.png"),
               const SizedBox(
                 height: 30,
@@ -52,7 +57,7 @@ class _UserSingInState extends State<UserSingIn> {
                 height: 5,
               ),
               forgetPassword(context),
-              reusableButton(context, "Sign In", colorCollection[1], () {
+              reusableButton(context, "Sign In", () {
                 // ! firebase Auth
                 cusSingin(
                     context, _emailTextController, _passwordTextController);
