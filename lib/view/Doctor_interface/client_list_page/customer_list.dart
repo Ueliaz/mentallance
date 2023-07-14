@@ -1,9 +1,9 @@
 library customer;
 
 import 'package:flutter/material.dart';
+import 'package:mentallance/services/task_assignment.dart';
 
 import '../../../components/reusable_widgets/reusable_button.dart';
-import '../../../services/task_assignment.dart';
 import '../../../theme/app_theme.dart';
 import 'add_customer.dart';
 
@@ -40,7 +40,7 @@ class _CustomerListState extends State<CustomerList> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const TaskAssignmentPage(),
+                        builder: (context) => const MyWidget(),
                       ));
                 }),
 

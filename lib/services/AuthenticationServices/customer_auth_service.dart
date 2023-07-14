@@ -1,25 +1,18 @@
 part of authentication;
-
 Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
   try {
-    final userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
+    final userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    ).then((value) {
-     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const AnketDoldur(),), (route) => false); 
-      return value;
-    });
-
+    );
     final user = userCredential.user;
     logg.v('Giriş yapan danışan: ${user?.uid}');
-
     final danisanDoc = await FirebaseFirestore.instance
         .collection('KayitOlanDanisan')
         .doc(user?.uid)
         .get();
-
     if (!danisanDoc.exists) {
       String welcomeMessage = 'Bu bilgiler danışana ait değil!!!';
       ScaffoldMessenger.of(context).showSnackBar(
@@ -30,7 +23,6 @@ Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
       );
       throw Exception('Bu kullanıcı danışan değil!');
     }
-
     FirebaseFirestore.instance.collection('GirisYapanDanisan').add({
       'DanisanId': user?.uid,
       'DanisanEmail': user?.email,
@@ -38,9 +30,7 @@ Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
       'DanisanIsim': '',
       'DanisanSoyisim': '',
     });
-
     logg.v('"GirisYapanDanisan" koleksiyonunda belge oluşturuldu.');
-
     String welcomeMessage = 'Hoş geldiniz, ${user?.email}';
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -51,7 +41,6 @@ Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
   } catch (e) {
     if (e is FirebaseAuthException) {
       String errorMessage = '';
-
       switch (e.code) {
         case 'user-not-found':
           errorMessage =
@@ -72,7 +61,6 @@ Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
           logg.e(errorMessage);
           break;
       }
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMessage),
