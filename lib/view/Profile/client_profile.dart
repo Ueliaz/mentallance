@@ -68,32 +68,64 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
 
 class EditProfilePage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
-
-  EditProfilePage({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil Düzenle'),
+        title: Text('Profil Düzenle'),
       ),
       body: Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'İsim Soyisim',
+              decoration: InputDecoration(
+                labelText: 'Kullanıcı Adı',
               ),
             ),
-            const SizedBox(height: 16.0),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: 'Şifre',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _phoneNumberController,
+              decoration: InputDecoration(
+                labelText: 'Telefon Numarası',
+              ),
+            ),
+            SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, _nameController.text);
+                // Save button pressed
+                String name = _nameController.text;
+                String email = _emailController.text;
+                String password = _passwordController.text;
+                String phoneNumber = _phoneNumberController.text;
+
+                // Perform the necessary operations with the entered data
+                // For example, you can update the user's profile in the database
+
+                // Return the updated name to the previous screen
+                Navigator.pop(context, name);
               },
-              child: const Text('Kaydet'),
+              child: Text('Kaydet'),
             ),
           ],
         ),
