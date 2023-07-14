@@ -1,4 +1,31 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        AppBar,
+        Border,
+        BoxDecoration,
+        BuildContext,
+        Center,
+        Colors,
+        Column,
+        Container,
+        EdgeInsets,
+        ElevatedButton,
+        FontWeight,
+        InputBorder,
+        InputDecoration,
+        MainAxisAlignment,
+        Padding,
+        Scaffold,
+        ScaffoldMessenger,
+        SizedBox,
+        SnackBar,
+        State,
+        StatefulWidget,
+        Text,
+        TextEditingController,
+        TextField,
+        TextStyle,
+        Widget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AnketDoldur extends StatefulWidget {
@@ -10,13 +37,15 @@ class _AnketDoldurState extends State<AnketDoldur> {
   TextEditingController _cevapController = TextEditingController();
 
   void _anketiGonder() {
-    String soru = 'Seans sonrası duygu ve düşüncelerinizi paylaşmanız bizim için önemlidir.İsimsiz olarak bizimle düşüncelerinizi  paylaşabilirsiniz.'; // Başlık olarak kullanılacak sabit bir soru metni
+    String soru =
+        'Seans sonrası duygu ve düşüncelerinizi paylaşmanız bizim için önemlidir.İsimsiz olarak bizimle düşüncelerinizi  paylaşabilirsiniz.'; // Başlık olarak kullanılacak sabit bir soru metni
     String cevap = _cevapController.text;
 
     // Firestore koleksiyonuna anketi kaydet
     FirebaseFirestore.instance.collection('anketler').add({
       'soru': soru,
       'cevap': cevap,
+      'AnketTarihi': DateTime.now(),
     });
 
     // Text alanını temizle
