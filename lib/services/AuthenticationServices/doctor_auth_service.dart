@@ -13,6 +13,7 @@ import 'package:mentallance/theme/app_theme.dart';
 
 import '../../components/assets.dart';
 import '../../view/Doctor_interface/client_list_page/customer_list.dart';
+import '../../view/Survey/survey.dart';
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
 part 'package:mentallance/services/AuthenticationServices/customer_auth_service.dart';
@@ -28,7 +29,10 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    );
+    ).then((value) {
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyWidget()), (route) => false);
+      return value;
+    });
 
     User? user = userCredential.user;
     logg.v('Giris yapan doktor: ${user?.uid}');
@@ -109,13 +113,15 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   }
 }
 
-void docSingUp(BuildContext context, econtroller, pcontroller, unamecontroller) async {
+void docSingUp(
+    BuildContext context, econtroller, pcontroller, unamecontroller) async {
   final logg = logger(Doctor_singIn);
   try {
     String email = econtroller.text;
     String password = pcontroller.text;
 
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -125,12 +131,24 @@ void docSingUp(BuildContext context, econtroller, pcontroller, unamecontroller) 
     logg.i('Doktor Kaydı Gerçekleştirildi: ${user?.uid}');
 
     // KayitOlanDoktor koleksiyonunda doküman oluşturuluyor.
-    await FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(user?.uid).set({
+    await FirebaseFirestore.instance
+        .collection('KayitOlanDoktor')
+        .doc(user?.uid)
+        .set({
       'DoktorIsim': unamecontroller.text,
       'DoktorSoyisim': '',
       'DoktorEmail': email,
       'DoktorId': user?.uid,
-      'DoktorRandevu': ['08.00', '09.00', '10:00', '11:00', '13.00', '14:00', '15.00', '16.00'],
+      'DoktorRandevu': [
+        '08.00',
+        '09.00',
+        '10:00',
+        '11:00',
+        '13.00',
+        '14:00',
+        '15.00',
+        '16.00'
+      ],
       'Danisanlar': [], // Başlangıçta boş bir danışanlar listesi ekleniyor
     });
 
@@ -146,7 +164,8 @@ void docSingUp(BuildContext context, econtroller, pcontroller, unamecontroller) 
     if (!user!.emailVerified) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Lütfen e-posta adresinizi doğrulayın. Doğrulama e-postası gönderildi.'),
+          content: Text(
+              'Lütfen e-posta adresinizi doğrulayın. Doğrulama e-postası gönderildi.'),
           backgroundColor: Colors.blue,
         ),
       );
@@ -182,7 +201,8 @@ void docSingUp(BuildContext context, econtroller, pcontroller, unamecontroller) 
           ),
         );
       } else if (e.code == 'email-already-in-use') {
-        errorMessage1 = 'Bu mail adresi zaten kayıtlı. Farklı bir adres deneyiniz.';
+        errorMessage1 =
+            'Bu mail adresi zaten kayıtlı. Farklı bir adres deneyiniz.';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(errorMessage1),

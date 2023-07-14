@@ -54,11 +54,11 @@ class _UserSingInState extends State<UserSingIn> {
               forgetPassword(context),
               reusableButton(context, "Sign In", colorCollection[1], () {
                 // ! firebase Auth
-                cusSingin(context,_emailTextController, _passwordTextController);
+                cusSingin(
+                    context, _emailTextController, _passwordTextController);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashScreen()));
                 //Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentPage()));
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const OdevListe()));
-
               }),
               //signUpOption()
             ],
@@ -81,8 +81,11 @@ class _UserSingInState extends State<UserSingIn> {
           ),
           onPressed: () {
             // ! firebase Auth
-            
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ForgotPassword()));
           }),
     );
   }
