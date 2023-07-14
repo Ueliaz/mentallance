@@ -56,7 +56,9 @@ class _UserSingInState extends State<UserSingIn> {
                 // ! firebase Auth
                 cusSingin(context,_emailTextController, _passwordTextController);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashScreen()));
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentPage()));
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const OdevListe()));
+
               }),
               //signUpOption()
             ],

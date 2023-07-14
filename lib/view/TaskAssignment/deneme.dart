@@ -120,17 +120,21 @@ class _HastaGorevPageState extends State<HastaGorevPage> {
           'GorevBaslik': _baslikController.text,
           'GorevAciklama': _aciklamaController.text,
           'GorevDurum': 'görev atandı',
+          'GorevTamamlanma' : false,
         };
 
-        await FirebaseFirestore.instance.collection('Gorev').add(gorevData);
+      final newGorevRef = await FirebaseFirestore.instance.collection('Gorev').add(gorevData);
+      final newGorevId = newGorevRef.id;
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Görev atandı.'),
-          ),
-        );
+      await newGorevRef.update({'GorevId': newGorevId});
 
-        // Görev atandıktan sonra yapılacak diğer işlemler
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Danışana görev atandı.'),
+        ),
+      );
+
+      // Görev atandıktan sonra yapılacak diğer işlemler
       }
     } catch (e) {
       print('Görev atama hatası: $e');
