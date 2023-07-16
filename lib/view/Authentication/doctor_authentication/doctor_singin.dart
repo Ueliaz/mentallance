@@ -45,7 +45,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               const SizedBox(
                 height: 30,
               ),
-              reusableTextField("Email Adresinizi Giriniz",
+              reusableTextField("Mailinizi Giriniz",
                   Icons.person_outline, false, _emailTextController),
               const SizedBox(
                 height: 20,
@@ -118,7 +118,3 @@ class _Doctor_singInState extends State<Doctor_singIn> {
   }
 }
 
-@override
-AppBar customAppBarr(BuildContext context, String title) {
-  return AppBar(title: Text(title));
-}

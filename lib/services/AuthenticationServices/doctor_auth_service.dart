@@ -8,8 +8,10 @@ import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/services/task_assignment.dart';
+import 'package:mentallance/view/introduction_page/introduction.dart';
 
 import '../../components/assets.dart';
+import '../../components/custom_widgets/custom_wıdgets.dart';
 import '../../view/Survey/survey.dart';
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
@@ -115,9 +117,11 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
 }
 
 void docSingUp(
-    BuildContext context, econtroller, pcontroller, unamecontroller) async {
+    BuildContext context, econtroller, pcontroller, unamecontroller,usurnamecontrpller) async {
   final logg = logger(Doctor_singIn);
   try {
+    String name = unamecontroller.text;
+    String surname = usurnamecontrpller.text;
     String email = econtroller.text;
     String password = pcontroller.text;
 
@@ -136,8 +140,8 @@ void docSingUp(
         .collection('KayitOlanDoktor')
         .doc(user?.uid)
         .set({
-      'DoktorIsim': unamecontroller.text,
-      'DoktorSoyisim': '',
+      'DoktorIsim': name,
+      'DoktorSoyisim': surname,
       'DoktorEmail': email,
       'DoktorId': user?.uid,
       'DoktorRandevu': [

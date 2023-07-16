@@ -46,18 +46,18 @@ class _UserSingInState extends State<UserSingIn> {
               const SizedBox(
                 height: 30,
               ),
-              reusableTextField("Kullanıcı Adınızı giriniz",
+              reusableTextField("Mailinizi Giriniz",
                   Icons.person_outline, false, _emailTextController),
               const SizedBox(
                 height: 20,
               ),
-              reusableTextField("Şifrenizi giriniz", Icons.lock_outline, true,
+              reusableTextField("Şifrenizi Giriniz", Icons.lock_outline, true,
                   _passwordTextController),
               const SizedBox(
                 height: 5,
               ),
               forgetPassword(context),
-              reusableButton(context, "Sign In", () {
+              reusableButton(context, "Giriş", () {
                 // ! firebase Auth
                 cusSingin(
                     context, _emailTextController, _passwordTextController);
