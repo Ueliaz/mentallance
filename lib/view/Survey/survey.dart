@@ -1,31 +1,4 @@
-import 'package:flutter/material.dart'
-    show
-        AppBar,
-        Border,
-        BoxDecoration,
-        BuildContext,
-        Center,
-        Colors,
-        Column,
-        Container,
-        EdgeInsets,
-        ElevatedButton,
-        FontWeight,
-        InputBorder,
-        InputDecoration,
-        MainAxisAlignment,
-        Padding,
-        Scaffold,
-        ScaffoldMessenger,
-        SizedBox,
-        SnackBar,
-        State,
-        StatefulWidget,
-        Text,
-        TextEditingController,
-        TextField,
-        TextStyle,
-        Widget;
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AnketDoldur extends StatefulWidget {

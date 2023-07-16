@@ -34,7 +34,6 @@ class _OdevListeState extends State<OdevListe> {
             .collection('KayitOlanDanisan')
             .doc(danisanId)
             .get();
-
     String? doktorId = danisanSnapshot.get('DoktorId');
 
     if (doktorId != null) {

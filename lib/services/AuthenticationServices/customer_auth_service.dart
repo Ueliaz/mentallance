@@ -6,7 +6,13 @@ Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    );
+    ).then((value) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AnketDoldur(),
+        ),
+      );});
     final user = userCredential.user;
     logg.v('Giriş yapan danışan: ${user?.uid}');
     final danisanDoc = await FirebaseFirestore.instance

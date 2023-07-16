@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-Container reusableButton(BuildContext context, String title, Function onTap, ) {
+Container reusableButton(
+  BuildContext context,
+  String title,
+  Function onTap,
+) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 50,
@@ -10,19 +14,9 @@ Container reusableButton(BuildContext context, String title, Function onTap, ) {
       onPressed: () {
         onTap();
       },
-      style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.pressed)) {
-              return Colors.black26;
-            }
-            return Colors.transparent;
-          }),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
       child: Text(
         title,
-        style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     ),
   );
