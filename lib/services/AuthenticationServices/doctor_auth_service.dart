@@ -9,6 +9,7 @@ import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/services/task_assignment.dart';
 import 'package:mentallance/theme/app_theme.dart';
+import 'package:mentallance/view/Profile/client_profile.dart';
 
 import '../../components/assets.dart';
 import '../../view/Survey/survey.dart';

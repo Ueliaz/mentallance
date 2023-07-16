@@ -58,7 +58,8 @@ class _UserSingInState extends State<UserSingIn> {
                     context, _emailTextController, _passwordTextController);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashScreen()));
                 //Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentPage()));
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const OdevListe()));
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => const OdevListe()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  ClientProfilePage()));
               }),
               //signUpOption()
             ],
