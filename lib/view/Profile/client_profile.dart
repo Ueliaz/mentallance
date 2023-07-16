@@ -37,7 +37,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
               ElevatedButton(
                 onPressed: () {
                   // Perform send message functionality
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SentMessage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ComposeEmail()));
                 },
                 child: Text('Mesaj Gönder'),
               ),

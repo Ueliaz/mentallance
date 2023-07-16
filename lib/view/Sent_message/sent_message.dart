@@ -1,87 +1,109 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-class SentMessage extends StatefulWidget {
-  const SentMessage({Key? key});
+class ComposeEmail extends StatefulWidget {
+  const ComposeEmail({Key? key});
 
   @override
-  _SentMessageState createState() => _SentMessageState();
+  _ComposeEmailState createState() => _ComposeEmailState();
 }
 
-class _SentMessageState extends State<SentMessage> {
-  TextEditingController _senderEmailController = TextEditingController();
+class _ComposeEmailState extends State<ComposeEmail> {
+  TextEditingController _toController = TextEditingController();
   TextEditingController _subjectController = TextEditingController();
-  TextEditingController _messageController = TextEditingController();
-  TextEditingController _recipientController = TextEditingController();
+  TextEditingController _fromController = TextEditingController();
 
   @override
   void dispose() {
-    _senderEmailController.dispose();
+    _toController.dispose();
     _subjectController.dispose();
-    _messageController.dispose();
-    _recipientController.dispose();
+    _fromController.dispose();
     super.dispose();
   }
+void _sendEmail() {
+  String to = _toController.text;
+  String subject = _subjectController.text;
+  String from = _fromController.text;
+  String mailId = generateRandomId(); // Rastgele bir mail ID oluşturma
+
+  // Firestore koleksiyonuna e-postayı kaydetme
+  FirebaseFirestore.instance.collection('Mailler').doc(mailId).set({
+    'AliciMail': to,
+    'GonderenMail': from,
+    'Konu': subject,
+    'MailId': mailId,
+    'timestamp': DateTime.now(),
+  }).then((value) {
+    // Gönderildikten sonra, kullanıcıyı ana sayfaya yönlendirebilirsiniz
+    Navigator.pop(context);
+  }).catchError((error) {
+    // Hata durumunda kullanıcıya bilgi verebilirsiniz
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('An error occurred while sending the email.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  });
+}
+
+String generateRandomId() {
+  // Rastgele bir mail ID oluşturmak için kullanılabilir
+  // İsteğe bağlı olarak farklı bir yöntem kullanabilirsiniz
+  return UniqueKey().toString();
+}
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Doktora Mesaj Gönder'),
+        title: Text('Compose Email'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: _senderEmailController,
+              controller: _toController,
               decoration: InputDecoration(
-                labelText: 'Gönderen E-posta',
+                labelText: 'To',
               ),
             ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _recipientController,
-              decoration: InputDecoration(
-                labelText: 'Alıcı E-posta',
-              ),
-            ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 8.0),
             TextField(
               controller: _subjectController,
               decoration: InputDecoration(
-                labelText: 'Konu',
+                labelText: 'Subject',
               ),
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 8.0),
             TextField(
-              controller: _messageController,
-              maxLines: null,
-              keyboardType: TextInputType.multiline,
+              controller: _fromController,
               decoration: InputDecoration(
-                labelText: 'Mesaj',
+                labelText: 'From',
               ),
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                sendEmail();
-              },
-              child: Text('Gönder'),
+              onPressed: _sendEmail,
+              child: Text('Send'),
             ),
           ],
         ),
       ),
     );
-  }
-
-  void sendEmail() {
-    final senderEmail = _senderEmailController.text;
-    final recipientEmail = _recipientController.text;
-    final subject = _subjectController.text;
-    final message = _messageController.text;
-
-    // E-posta gönderme işlemleri burada gerçekleştirilebilir
-    // senderEmail, recipientEmail, subject, message değerlerini kullanarak e-posta gönderme işlemi yapılabilir
   }
 }
