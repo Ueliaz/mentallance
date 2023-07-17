@@ -8,21 +8,23 @@ import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/services/task_assignment.dart';
-import 'package:mentallance/theme/app_theme.dart';
-import 'package:mentallance/view/Doctor_interface/client_list_page/add_customer.dart';
-import 'package:mentallance/view/Doctor_interface/client_list_page/customer_list.dart';
 import 'package:mentallance/view/Profile/client_profile.dart';
 import 'package:mentallance/view/Profile/doctor_profile.dart';
+import 'package:mentallance/view/introduction_page/introduction.dart';
 
 import '../../components/assets.dart';
-import '../../view/Survey/survey.dart';
+import '../../theme/app_theme.dart';
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
 part 'package:mentallance/services/AuthenticationServices/customer_auth_service.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
 part 'package:mentallance/view/Authentication/user_authentication/user_singin.dart';
-part 'package:mentallance/view/Authentication/forgot_password.dart';
+part 'package:mentallance/view/Authentication/forgot_password.dart';  
+
+
+
+
 
 Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
@@ -80,7 +82,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
     // Giriş başarılı olduğunda gerekli yönlendirmeyi burada gerçekleştirebilirsiniz.
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const DoctorProfilePage()),
+      MaterialPageRoute(builder: (context) => const MyWidget()),
     );
   } catch (e) {
     if (e is FirebaseAuthException) {
@@ -120,9 +122,11 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
 }
 
 void docSingUp(
-    BuildContext context, econtroller, pcontroller, unamecontroller) async {
+    BuildContext context, econtroller, pcontroller, unamecontroller,usurnamecontrpller) async {
   final logg = logger(Doctor_singIn);
   try {
+    String name = unamecontroller.text;
+    String surname = usurnamecontrpller.text;
     String email = econtroller.text;
     String password = pcontroller.text;
 
@@ -141,8 +145,8 @@ void docSingUp(
         .collection('KayitOlanDoktor')
         .doc(user?.uid)
         .set({
-      'DoktorIsim': unamecontroller.text,
-      'DoktorSoyisim': '',
+      'DoktorIsim': name,
+      'DoktorSoyisim': surname,
       'DoktorEmail': email,
       'DoktorId': user?.uid,
       'DoktorRandevu': [
