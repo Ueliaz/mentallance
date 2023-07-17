@@ -30,6 +30,7 @@ class _MyWidgetState extends State<MyWidget> {
         });
       }
     } catch (e) {
+      Text("Hata oluştu: $e");
       print('Hastaları alırken hata oluştu: $e');
     }
   }
