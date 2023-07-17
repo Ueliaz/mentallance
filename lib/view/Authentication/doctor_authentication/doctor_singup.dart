@@ -59,7 +59,7 @@ class _UserSingUpState extends State<UserSingUp> {
                 height: 20,
               ),
               reusableTextField("Şifrenizi Giriniz", Icons.lock_outline,
-                  false, _passwordTextController),
+                  true, _passwordTextController),
               const SizedBox(
                 height: 20,
                 
