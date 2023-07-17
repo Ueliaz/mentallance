@@ -4,6 +4,7 @@ import 'package:mentallance/theme/color_schemes.g.dart';
 
 import 'package:mentallance/view/entry_page/entry_page_view_mobile.dart';
 import 'firebase_options.dart';
+import 'view/introduction_page/introduction.dart';
 
 
 void main() async {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      home: const EntryPageView(),
+      home: const IntroductionPage(),
     );
   }
 }

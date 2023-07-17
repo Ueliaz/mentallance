@@ -8,6 +8,7 @@ import 'package:mentallance/components/reusable_widgets/reusable_button.dart';
 import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart';
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/services/task_assignment.dart';
+import 'package:mentallance/theme/color_schemes.g.dart';
 import 'package:mentallance/view/introduction_page/introduction.dart';
 
 import '../../components/assets.dart';
@@ -15,10 +16,15 @@ import '../../components/custom_widgets/custom_wıdgets.dart';
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
 part 'package:mentallance/services/AuthenticationServices/customer_auth_service.dart';
+part 'package:mentallance/services/AuthenticationServices/customer_information_service.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
 part 'package:mentallance/view/Authentication/user_authentication/user_singin.dart';
-part 'package:mentallance/view/Authentication/forgot_password.dart';
+part 'package:mentallance/view/Authentication/forgot_password.dart';  
+part 'package:mentallance/view/Authentication/user_authentication/user_information.dart';
+
+
+
 
 Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
