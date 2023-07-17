@@ -12,7 +12,6 @@ import 'package:mentallance/view/introduction_page/introduction.dart';
 
 import '../../components/assets.dart';
 import '../../components/custom_widgets/custom_wıdgets.dart';
-import '../../view/Survey/survey.dart';
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
 part 'package:mentallance/services/AuthenticationServices/customer_auth_service.dart';
