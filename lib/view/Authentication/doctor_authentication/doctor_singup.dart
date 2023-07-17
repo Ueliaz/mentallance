@@ -54,8 +54,9 @@ class _UserSingUpState extends State<UserSingUp> {
             const SizedBox(
               height: 20,
             ),
-            reusableButton(context, "Sign Up", colorCollection[1], (){
-              docSingUp(context,_emailTextController, _passwordTextController,_userNameTextController);
+            reusableButton(context, "Sign Up", colorCollection[1], () {
+              docSingUp(context, _emailTextController, _passwordTextController,
+                  _userNameTextController, _userNameTextController);
 
               //TODO ;
               //* hesap olusturma icin veri tabanina baglanacak
@@ -68,4 +69,3 @@ class _UserSingUpState extends State<UserSingUp> {
     );
   }
 }
-

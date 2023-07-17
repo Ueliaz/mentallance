@@ -20,11 +20,7 @@ part 'package:mentallance/services/AuthenticationServices/customer_auth_service.
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singin.dart';
 part 'package:mentallance/view/Authentication/doctor_authentication/doctor_singup.dart';
 part 'package:mentallance/view/Authentication/user_authentication/user_singin.dart';
-part 'package:mentallance/view/Authentication/forgot_password.dart';  
-
-
-
-
+part 'package:mentallance/view/Authentication/forgot_password.dart';
 
 Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
@@ -80,6 +76,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
     );
 
     // Giriş başarılı olduğunda gerekli yönlendirmeyi burada gerçekleştirebilirsiniz.
+    // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const MyWidget()),
@@ -121,8 +118,8 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   }
 }
 
-void docSingUp(
-    BuildContext context, econtroller, pcontroller, unamecontroller,usurnamecontrpller) async {
+void docSingUp(BuildContext context, econtroller, pcontroller, unamecontroller,
+    usurnamecontrpller) async {
   final logg = logger(Doctor_singIn);
   try {
     String name = unamecontroller.text;
