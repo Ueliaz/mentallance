@@ -27,12 +27,16 @@ part 'package:mentallance/view/Authentication/forgot_password.dart';
 Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
   final logg = logger(UserSingUp);
   try {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
       email: econtroller.text,
       password: pcontroller.text,
-    ).then((value) {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyWidget()), (route) => false);
+    )
+        .then((value) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const DoctorProfilePage()),
+          (route) => false);
       return value;
     });
 
@@ -76,7 +80,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
     // Giriş başarılı olduğunda gerekli yönlendirmeyi burada gerçekleştirebilirsiniz.
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const MyWidget()),
+      MaterialPageRoute(builder: (context) => const DoctorProfilePage()),
     );
   } catch (e) {
     if (e is FirebaseAuthException) {

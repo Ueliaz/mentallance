@@ -21,8 +21,10 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   Future<void> loadDoctorProfile() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     final doctorId = currentUser?.uid;
-    final doctorSnapshot =
-        await FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(doctorId).get();
+    final doctorSnapshot = await FirebaseFirestore.instance
+        .collection('KayitOlanDoktor')
+        .doc(doctorId)
+        .get();
 
     if (doctorSnapshot.exists) {
       final doctorData = doctorSnapshot.data();
@@ -84,6 +86,16 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               ),
             ],
           ),
+          const SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyBlogsPage()),
+              );
+            },
+            child: const Text('Yazılarım'),
+          ),
         ],
       ),
     );
@@ -93,6 +105,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
 class WriteBlogPage extends StatelessWidget {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
+
+  final CollectionReference blogYazilariCollection =
+      FirebaseFirestore.instance.collection('BlogYazilari');
 
   @override
   Widget build(BuildContext context) {
@@ -121,15 +136,54 @@ class WriteBlogPage extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                // Perform blog post creation logic
+              onPressed: () async {
                 String title = _titleController.text;
                 String content = _contentController.text;
 
-                // Add your logic to save the blog post or perform other operations
+                final currentUser = FirebaseAuth.instance.currentUser;
+                final doctorId = currentUser?.uid;
+                final doctorSnapshot = await FirebaseFirestore.instance
+                    .collection('KayitOlanDoktor')
+                    .doc(doctorId)
+                    .get();
 
-                // Navigate back to the profile page
-                Navigator.pop(context);
+                if (doctorSnapshot.exists) {
+                  final doctorData = doctorSnapshot.data();
+
+                  String doktorIsim =
+                      '${doctorData?['DoktorIsim']} ${doctorData?['DoktorSoyisim']}';
+
+                  // Verileri Firebase'e kaydet
+                  await blogYazilariCollection.add({
+                    'DoktorId': doctorId,
+                    'DoktorIsim': doctorData?['DoktorIsim'],
+                    'DoktorSoyisim': doctorData?['DoktorSoyisim'],
+                    'BlogBaslik': title,
+                    'BlogYazi': content,
+                  });
+
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Başarılı'),
+                        content: const Text('Blog yazınız paylaşıldı.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Tamam'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+                  // Gönderildikten sonra sayfayı kapat
+                  // Navigator.pop(context);
+                }
               },
               child: const Text('Gönder'),
             ),
@@ -140,6 +194,78 @@ class WriteBlogPage extends StatelessWidget {
   }
 }
 
+class MyBlogsPage extends StatefulWidget {
+  @override
+  _MyBlogsPageState createState() => _MyBlogsPageState();
+}
+
+class _MyBlogsPageState extends State<MyBlogsPage> {
+  late Stream<QuerySnapshot> blogsStream;
+
+  @override
+  void initState() {
+    super.initState();
+    loadBlogs();
+  }
+
+  void loadBlogs() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final doctorId = currentUser?.uid;
+
+    blogsStream = FirebaseFirestore.instance
+        .collection('BlogYazilari')
+        .where('DoktorId', isEqualTo: doctorId)
+        .snapshots();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Yazılarım'),
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: blogsStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final blogs = snapshot.data!.docs;
+
+            if (blogs.isEmpty) {
+              return Center(
+                child: const Text('Henüz blog yazısı paylaşılmamış.'),
+              );
+            }
+
+            return ListView.builder(
+              itemCount: blogs.length,
+              itemBuilder: (context, index) {
+                final blog = blogs[index];
+
+                final blogBaslik = blog['BlogBaslik'];
+                final blogYazi = blog['BlogYazi'];
+
+                return ListTile(
+                  title: Text(blogBaslik),
+                  subtitle: Text(blogYazi),
+                );
+              },
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Hata: ${snapshot.error}'),
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
+    );
+  }
+}
 
 class EditProfilePage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
