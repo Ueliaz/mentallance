@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DoctorProfilePage extends StatefulWidget {
@@ -9,6 +11,26 @@ class DoctorProfilePage extends StatefulWidget {
 
 class _DoctorProfilePageState extends State<DoctorProfilePage> {
   String name = 'İsim Soyisim';
+
+  @override
+  void initState() {
+    super.initState();
+    loadDoctorProfile();
+  }
+
+  Future<void> loadDoctorProfile() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final doctorId = currentUser?.uid;
+    final doctorSnapshot =
+        await FirebaseFirestore.instance.collection('KayitOlanDoktor').doc(doctorId).get();
+
+    if (doctorSnapshot.exists) {
+      final doctorData = doctorSnapshot.data();
+      setState(() {
+        name = '${doctorData?['DoktorIsim']} ${doctorData?['DoktorSoyisim']}';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +143,18 @@ class WriteBlogPage extends StatelessWidget {
 
 class EditProfilePage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+
+  final CollectionReference _doctorsCollection =
+      FirebaseFirestore.instance.collection('KayitOlanDoktor');
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final doctorId = currentUser?.uid;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Profil Düzenle'),
@@ -139,7 +167,14 @@ class EditProfilePage extends StatelessWidget {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: 'Kullanıcı Adı',
+                labelText: 'Adı',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _surnameController,
+              decoration: InputDecoration(
+                labelText: 'Soyadı',
               ),
             ),
             SizedBox(height: 16.0),
@@ -153,30 +188,27 @@ class EditProfilePage extends StatelessWidget {
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
-                labelText: 'Şifre',
+                labelText: 'Yeni Şifre',
               ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _phoneNumberController,
-              decoration: InputDecoration(
-                labelText: 'Telefon Numarası',
-              ),
+              obscureText: true,
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                // Save button pressed
+              onPressed: () async {
                 String name = _nameController.text;
+                String surname = _surnameController.text;
                 String email = _emailController.text;
-                String password = _passwordController.text;
-                String phoneNumber = _phoneNumberController.text;
+                String newPassword = _passwordController.text;
 
-                // Perform the necessary operations with the entered data
-                // For example, you can update the user's profile in the database
+                await _doctorsCollection.doc(doctorId).update({
+                  'DoktorIsim': name,
+                  'DoktorSoyisim': surname,
+                  'DoktorEmail': email,
+                });
 
-                // Return the updated name to the previous screen
-                Navigator.pop(context, name);
+                await currentUser?.updatePassword(newPassword);
+
+                Navigator.pop(context, '$name $surname');
               },
               child: Text('Kaydet'),
             ),

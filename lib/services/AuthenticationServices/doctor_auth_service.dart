@@ -10,6 +10,7 @@ import 'package:mentallance/logger.dart';
 import 'package:mentallance/services/task_assignment.dart';
 import 'package:mentallance/theme/app_theme.dart';
 import 'package:mentallance/view/Profile/client_profile.dart';
+import 'package:mentallance/view/Profile/doctor_profile.dart';
 
 import '../../components/assets.dart';
 import '../../view/Survey/survey.dart';
@@ -29,7 +30,7 @@ Future<void> docSingin(BuildContext context, econtroller, pcontroller) async {
       email: econtroller.text,
       password: pcontroller.text,
     ).then((value) {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyWidget()), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const DoctorProfilePage()), (route) => false);
       return value;
     });
 

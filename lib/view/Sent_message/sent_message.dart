@@ -32,7 +32,7 @@ void _sendEmail() {
     'GonderenMail': from,
     'Konu': subject,
     'MailId': mailId,
-    'timestamp': DateTime.now(),
+    'Zaman': DateTime.now(),
   }).then((value) {
     // Gönderildikten sonra, kullanıcıyı ana sayfaya yönlendirebilirsiniz
     Navigator.pop(context);
@@ -59,8 +59,6 @@ void _sendEmail() {
 }
 
 String generateRandomId() {
-  // Rastgele bir mail ID oluşturmak için kullanılabilir
-  // İsteğe bağlı olarak farklı bir yöntem kullanabilirsiniz
   return UniqueKey().toString();
 }
 
@@ -69,7 +67,7 @@ String generateRandomId() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compose Email'),
+        title: Text('Mesaj Gönder'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -79,27 +77,27 @@ String generateRandomId() {
             TextField(
               controller: _toController,
               decoration: InputDecoration(
-                labelText: 'To',
+                labelText: 'Kime',
               ),
             ),
             SizedBox(height: 8.0),
             TextField(
               controller: _subjectController,
               decoration: InputDecoration(
-                labelText: 'Subject',
+                labelText: 'Mesaj',
               ),
             ),
             SizedBox(height: 8.0),
             TextField(
               controller: _fromController,
               decoration: InputDecoration(
-                labelText: 'From',
+                labelText: 'Kimden',
               ),
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _sendEmail,
-              child: Text('Send'),
+              child: Text('Gönder'),
             ),
           ],
         ),
