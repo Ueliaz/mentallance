@@ -19,7 +19,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
           length: 3,
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              20, MediaQuery.of(context).size.height * 0, 20, 0),
+                20, MediaQuery.of(context).size.height * 0, 20, 0),
             child: Column(
               children: [
                 const TabBar(tabs: [
@@ -32,12 +32,17 @@ class _IntroductionPageState extends State<IntroductionPage> {
                     text: '............................',
                     height: 1,
                   ),
+                   Tab(
+                    text: '............................',
+                    height: 1,
+                  ),
                 ]),
                 Expanded(
                   child: TabBarView(children: [
                     page_1(context),
                     page_2(context),
                     page_3(context),
+                    girisPage(context),
                   ]),
                 ),
               ],
@@ -50,7 +55,6 @@ class _IntroductionPageState extends State<IntroductionPage> {
 Container page_1(context) {
   return Container(
     child: Column(
-      
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Flexible(
@@ -81,7 +85,7 @@ Container page_1(context) {
 }
 
 Container page_2(context) {
-    return Container(
+  return Container(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -99,7 +103,7 @@ Container page_2(context) {
             child: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: Text(
-                 "Mentallance, ihtiyaçlarınıza ve hedeflerinize uygun terapi süreci sunar. Psikolojik destek seanslarınızı istediğiniz zaman planlayabilir ve sürecinizi yönetebilirsiniz."),
+                  "Mentallance, ihtiyaçlarınıza ve hedeflerinize uygun terapi süreci sunar. Psikolojik destek seanslarınızı istediğiniz zaman planlayabilir ve sürecinizi yönetebilirsiniz."),
             ),
           ),
         ),
@@ -113,7 +117,7 @@ Container page_2(context) {
 }
 
 Container page_3(context) {
-    return Container(
+  return Container(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -138,15 +142,19 @@ Container page_3(context) {
         Flexible(
             flex: 1,
             child:
-                ElevatedButton(onPressed: () {
-                  
-                }, child: Text('Kullanmaya Başla'))
-                ),
+                Image.asset(solaKaydirPng, height: 50, width: 50, scale: 1.5)),
       ],
     ),
   );
 }
 
+girisPage(context){
+  
+
+
+
+
+}
 
 
 
