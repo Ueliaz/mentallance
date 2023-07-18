@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../components/assets.dart';
+import '../../../components/custom_widgets/custom_wıdgets.dart';
 import '../../../components/reusable_widgets/reusable_button.dart';
 import '../../../components/reusable_widgets/reusable_text_field.dart';
 import '../../../services/add_customer_service.dart';
@@ -33,10 +34,13 @@ class _AddClientState extends State<AddClient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBarr(context, 'Şifremi Unuttum'),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.width * 0.1, 20, 0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
               Image.asset(forgotimg),
               reusableTextField(
                 "Kullanıcı Adınızı giriniz",
@@ -44,18 +48,18 @@ class _AddClientState extends State<AddClient> {
                 false,
                 _emailTextController,
               ),
-              Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: reusableButton(
-                  context,
-                  'YENİ DANISAN KAYIT',             
-                  addCustomerService, // Call the addCustomerService method when the button is pressed
-                ),
+              SizedBox(height: 20,),
+              reusableButton(
+                context,
+                'YENİ DANISAN KAYIT',             
+                addCustomerService, // Call the addCustomerService method when the button is pressed
               ),
             ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+

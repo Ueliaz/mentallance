@@ -53,6 +53,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 List<String> availableTimes =
                     await getAvailableAppointmentTimes(doctorId);
 
+                // ignore: use_build_context_synchronously
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
