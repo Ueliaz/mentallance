@@ -7,9 +7,10 @@ import 'package:mentallance/view/Profile/client_profile.dart';
 import 'package:mentallance/view/Profile/doctor_profile.dart';
 import 'package:mentallance/view/Settings/settings.dart';
 
+
 import 'package:mentallance/view/entry_page/entry_page_view_mobile.dart';
 import 'firebase_options.dart';
-import 'view/introduction_page/introduction.dart';
+
 
 
 void main() async {
@@ -104,6 +105,7 @@ class _CusBottonNavBarState extends State<CusBottonNavBar> {
     // MyWidget(),
     // SettingsPage(),
     ClientProfilePage(),
+    MyWidget(),
     SettingsPage(),
     
     

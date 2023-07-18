@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentallance/components/assets.dart';
+import 'package:mentallance/main.dart';
 import 'package:mentallance/services/AuthenticationServices/doctor_auth_service.dart';
 
 import '../../components/custom_widgets/custom_wıdgets.dart';
@@ -141,7 +142,7 @@ Container page_3(context) {
         Flexible(
             flex: 1,
             child:
-                ElevatedButton(onPressed: () {Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => UserInformation(),), (route) => false);}, child: Text('Başla'))),
+                ElevatedButton(onPressed: () {Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => CusBottonNavBar(),), (route) => false);}, child: Text('Başla'))),
       ],
     ),
   );

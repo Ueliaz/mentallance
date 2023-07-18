@@ -11,7 +11,7 @@ class _UserInformationState extends State<UserInformation> {
   final TextEditingController _userNameTextController = TextEditingController();
   final TextEditingController _userSurnameTextController =
       TextEditingController();
-  final TextEditingController _genderTextController = TextEditingController();
+  // final TextEditingController _genderTextController = TextEditingController();
   String dropDownValue = 'Cinsiyetinizi Seçiniz';
   @override
   Widget build(BuildContext context) {

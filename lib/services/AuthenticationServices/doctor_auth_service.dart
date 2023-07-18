@@ -9,12 +9,12 @@ import 'package:mentallance/components/reusable_widgets/reusable_text_field.dart
 import 'package:mentallance/logger.dart';
 import 'package:mentallance/main.dart';
 import 'package:mentallance/services/task_assignment.dart';
-import 'package:mentallance/theme/color_schemes.g.dart';
 import 'package:mentallance/view/introduction_page/introduction.dart';
+
 
 import '../../components/assets.dart';
 import '../../components/custom_widgets/custom_wıdgets.dart';
-import '../../view/Profile/doctor_profile.dart';
+
 
 part 'package:mentallance/services/AuthenticationServices/forgot_password_service.dart';
 part 'package:mentallance/services/AuthenticationServices/customer_auth_service.dart';
