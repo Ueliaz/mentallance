@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentallance/view/Sent_message/sent_message.dart';
 
 class ClientProfilePage extends StatefulWidget {
   @override
@@ -36,6 +37,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
               ElevatedButton(
                 onPressed: () {
                   // Perform send message functionality
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ComposeEmail()));
                 },
                 child: Text('Mesaj Gönder'),
               ),
