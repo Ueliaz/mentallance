@@ -20,7 +20,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             child: Column(
               children: [
                 Image.asset(forgotimg),
-                reusableTextField("Kullanıcı Adınızı Giriniz",
+                reusableTextField("Maitinizi Giriniz",
                     Icons.person_outline, false, _emailTextController),
                     SizedBox(height: 20,),
                 reusableButton(

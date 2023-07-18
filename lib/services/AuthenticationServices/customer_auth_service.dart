@@ -10,7 +10,7 @@ Future<void> cusSingin(BuildContext context, econtroller, pcontroller) async {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const IntroductionPage(),
+          builder: (context) => const CusBottonNavBar(),
         ),
       );});
     final user = userCredential.user;

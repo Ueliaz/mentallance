@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mentallance/view/Sent_message/sent_message.dart';
 
+import '../../components/custom_widgets/custom_wıdgets.dart';
+import '../../theme/color_schemes.g.dart';
+
 class ClientProfilePage extends StatefulWidget {
+  const ClientProfilePage({super.key});
+
   @override
   _ClientProfilePageState createState() => _ClientProfilePageState();
 }
@@ -11,10 +16,13 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(children: [     
+      Container(color: lightColorScheme.primaryContainer,height: MediaQuery.of(context).size.height*0.2,width: MediaQuery.of(context).size.width,),
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: customAppBarr(context, 'DOKTOR PROFİLİ'),
+        body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
@@ -54,6 +62,15 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
           Container(), // Empty Container
         ],
       ),
-    );
+      )
+    ]);
   }
 }
+
+
+
+//  Container(
+//       padding: EdgeInsets.all(16.0),
+//       child: 
+//     );
+

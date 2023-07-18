@@ -53,7 +53,6 @@ class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: doctorGNav(context),
       appBar: customAppBarr(context, 'HASTALARIM'),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -103,6 +102,7 @@ class HastaGorevPage extends StatefulWidget {
   final String patientId;
   final String patientEmail;
   const HastaGorevPage({
+    Key? key,
     required this.patientId,
     required this.patientEmail,
   });

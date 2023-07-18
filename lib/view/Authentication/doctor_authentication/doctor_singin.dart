@@ -61,7 +61,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               reusableButton(context, "Sign In", () {
                 docSingin(
                     context, _emailTextController, _passwordTextController);
-                //FNavigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) => CilendList(),), (route) => false);
+
               }),
               signUpOption()
             ],
