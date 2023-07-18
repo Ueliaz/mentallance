@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      home: const CusBottonNavBar(),
+      home: const EntryPageView(),
     );
   }
 }
