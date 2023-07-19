@@ -67,16 +67,16 @@ class _DocBottonNavBarState extends State<DocBottonNavBar> {
             
             tabs:const  [
             GButton(
-              icon: Icons.home,
-              text: 'profil',
+              icon: Icons.person,
+              text: 'Profil',
             ),
             GButton(
-              icon: Icons.favorite,
-              text: 'hastalarim',
+              icon: Icons.medical_information,
+              text: 'Hastalarim',
             ),
             GButton(
               icon: Icons.settings,
-              text: 'ayarlar',
+              text: 'Ayarlar',
             ),
         
             
@@ -105,7 +105,7 @@ class _CusBottonNavBarState extends State<CusBottonNavBar> {
     // MyWidget(),
     // SettingsPage(),
     ClientProfilePage(),
-    MyWidget(),
+    OdevListe(),
     SettingsPage(),
     
     
@@ -126,16 +126,16 @@ class _CusBottonNavBarState extends State<CusBottonNavBar> {
             
             tabs:const  [
             GButton(
-              icon: Icons.home,
-              text: 'profil',
+              icon: Icons.person,
+              text: 'Profil',
             ),
             GButton(
-              icon: Icons.favorite,
-              text: 'hastalarim',
+              icon: Icons.medical_services,
+              text: 'Görevlerim',
             ),
             GButton(
               icon: Icons.settings,
-              text: 'ayarlar',
+              text: 'Ayarlar',
             ),
         
             

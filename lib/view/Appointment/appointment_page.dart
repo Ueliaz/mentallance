@@ -42,83 +42,102 @@ class _AppointmentPageState extends State<AppointmentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBarr(context, 'Randevu Al'),
       body: SafeArea(
         child: Column(
           children: [
             tableCalendar(context),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                // Veritabanından randevu saatlerini al
-                List<String> availableTimes =
-                    await getAvailableAppointmentTimes(doctorId);
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(90)),
+              child: ElevatedButton(
+                onPressed: () async {
+                  // Veritabanından randevu saatlerini al
+                  List<String> availableTimes =
+                      await getAvailableAppointmentTimes(doctorId);
 
-                // ignore: use_build_context_synchronously
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Randevu Saatini Seçin'),
-                      content: SingleChildScrollView(
-                        child: Column(
-                          children: availableTimes.map((time) {
-                            return RadioListTile(
-                              title: Text(time),
-                              value: time,
-                              groupValue: selectedTime,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedTime = value!;
-                                });
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            if (selectedTime != null  && availableTimes.contains(selectedTime)) {
-                              // Seçilen randevu saati, müsait saatler arasında yer alıyor
-
-  // Veritabanına randevu kaydını eklemek için gerekli işlemleri gerçekleştirin
-  await FirebaseFirestore.instance.collection('Randevular').add({
-    'DoktorId': doctorId,
-    'DanisanId': FirebaseAuth.instance.currentUser!.uid,
-    'RandevuTarihi': today,
-    'RandevuSaati': selectedTime,
-  });
-                              Navigator.of(context).pop();
-                            } else {
-                              // Kullanıcı bir saat seçmediğinde hata mesajı gösterin
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Hata'),
-                                    content: const Text('Lütfen bir saat seçin.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('Tamam'),
-                                      ),
-                                    ],
-                                  );
+                  // ignore: use_build_context_synchronously
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Randevu Saatini Seçin'),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            children: availableTimes.map((time) {
+                              return RadioListTile(
+                                title: Text(time),
+                                value: time,
+                                groupValue: selectedTime,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedTime = value!;
+                                  });
                                 },
                               );
-                            }
-                          },
-                          child: const Text('Seç'),
+                            }).toList(),
+                          ),
                         ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Saat Seçimi'),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              if (selectedTime != null &&
+                                  availableTimes.contains(selectedTime)) {
+                                // Seçilen randevu saati, müsait saatler arasında yer alıyor
+
+                                // Veritabanına randevu kaydını eklemek için gerekli işlemleri gerçekleştirin
+                                await FirebaseFirestore.instance
+                                    .collection('Randevular')
+                                    .add({
+                                  'DoktorId': doctorId,
+                                  'DanisanId':
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                  'RandevuTarihi': today,
+                                  'RandevuSaati': selectedTime,
+                                });
+                                Navigator.of(context).pop();
+                              } else {
+                                // Kullanıcı bir saat seçmediğinde hata mesajı gösterin
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Hata'),
+                                      content:
+                                          const Text('Lütfen bir saat seçin.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Tamam'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            child: const Text('Seç'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Saat Seçimi'),
+              ),
             ),
+            reusableButton(context, 'Randevularım', () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CalendarScreen()));
+            }),
           ],
         ),
       ),

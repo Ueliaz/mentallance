@@ -73,7 +73,7 @@ class _OdevListeState extends State<OdevListe> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Görevler'),
+      title: customAppBarr(context, "Görevlerim"),
     ),
     body: gorevler.isEmpty
         ? Center(
@@ -84,13 +84,20 @@ Widget build(BuildContext context) {
             itemBuilder: (context, index) {
               bool yapildi = gorevler[index]['GorevTamamlanma'] ?? false;
 
-              return ListTile(
-                title: Text(gorevler[index]['GorevBaslik']),
-                leading: Checkbox(
-                  value: yapildi,
-                  onChanged: (value) {
-                    toggleGorevYapildi(index);
-                  },
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(color: lightColorScheme.secondaryContainer.withOpacity(0.3),borderRadius: BorderRadius.circular(50)),
+                  
+                  child: ListTile(
+                    title: Text(gorevler[index]['GorevBaslik'],style: TextStyle(color: lightColorScheme.onSecondaryContainer),),
+                    leading: Checkbox(
+                      value: yapildi,
+                      onChanged: (value) {
+                        toggleGorevYapildi(index);
+                      },
+                    ),
+                  ),
                 ),
               );
             },

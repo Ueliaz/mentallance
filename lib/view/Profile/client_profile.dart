@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mentallance/view/Sent_message/sent_message.dart';
 
 import '../../components/custom_widgets/custom_wıdgets.dart';
+import '../../services/appointment_service.dart';
 import '../../theme/color_schemes.g.dart';
 
 class ClientProfilePage extends StatefulWidget {
@@ -52,6 +53,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
               SizedBox(width: 16.0),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentPage()));
                   // Perform make an appointment functionality
                 },
                 child: Text('Randevu Al'),

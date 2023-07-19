@@ -58,7 +58,7 @@ class _Doctor_singInState extends State<Doctor_singIn> {
               forgetPassword(context),
               // docSingIn(context, _emailTextController, _passwordTextController),
 
-              reusableButton(context, "Sign In", () {
+              reusableButton(context, "Giriş", () {
                 docSingin(
                     context, _emailTextController, _passwordTextController);
 

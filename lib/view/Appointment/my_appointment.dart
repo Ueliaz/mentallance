@@ -62,12 +62,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
               return Container(
                 width: MediaQuery.of(context).size.width / 3,
                 height: 40,
-                color: Colors.blue,
+                color: lightColorScheme.primaryContainer,
                 child: Center(
                   child: Text(
                     topBarTitles[index],
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style:  TextStyle(
+                      color: lightColorScheme.onPrimaryContainer,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
